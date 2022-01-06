@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block body %}
+	<div id="fh5co-work-section">
+		<div class="container">
+			<div class="heading-section text-center">
+				<h2>This week seminar</h2>
+			</div>
+			<div class="row " style="display: flex; flex-wrap: wrap;">
+				{% for seminar in this_week_seminar %}
+				<div class="col-md-4 col-sm-4">
+					<div style="font-weight: bold">{{ seminar.title }}</div>
+					<div>{{ seminar.presenter }}</div>
+					<div style="font-size:small">{{ seminar.abstract }}</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+
+    <div id="fh5co-work-section">
+        <div class="container">
+            <div class="heading-section text-center">
+                <h2>Previous seminar</h2>
+            </div>
+			<div class="row " style="display: flex; flex-wrap: wrap;">
+				{% for seminar_info in prev_seminar_lst %}
+				<div class="col-md-4 col-sm-4">
+					<div style="font-weight: bold; margin-top: 20px"> {{ seminar_info.title }} </div>
+					<div>{{ seminar_info.presenter }}</div>
+				</div>
+				{% endfor %}
+			</div>
+            <hr/>
+
+        </div>
+    </div>
+
+
+{% endblock %}

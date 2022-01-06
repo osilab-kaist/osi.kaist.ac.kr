@@ -1,0 +1,157 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <title>OSI LAB</title>
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content=""/>
+    <meta property="og:image" content=""/>
+    <meta property="og:url" content=""/>
+    <meta property="og:site_name" content=""/>
+    <meta property="og:description" content=""/>
+    <meta name="twitter:title" content="" />
+    <meta name="twitter:image" content="" />
+    <meta name="twitter:url" content="" />
+    <meta name="twitter:card" content="" />
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <!-- Icomoon Icon Fonts-->
+    <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
+    <!-- Bootstrap  -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+    <!-- Modernizr JS -->
+    <script type="text/javascript" src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
+    <!-- FOR IE9 below -->
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="{% static 'js/respond.min.js' %}"></script>
+    <![endif]-->
+
+</head>
+<body>
+<header>
+    <div class="container text-center">
+        <div class="fh5co-navbar-brand">
+            <a class="fh5co-logo" href="/home">OSI LAB</a>
+        </div>
+        <nav id="fh5co-main-nav" role="navigation">
+            <ul>
+                <li>
+                    <div class="dropdown show">
+                      <a class="dropdown-toggle {{ menu_active.ourteam }}" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Our Team
+                      </a>
+
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                          <a class="dropdown-item" href="/ourteam/professor">Professor</a>
+                          <a class="dropdown-item" href="/ourteam/students">Students</a>
+                          <a class="dropdown-item" href="/ourteam/alumni">Alumni</a>
+                      </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="dropdown show">
+                        <a class="dropdown-toggle {{ menu_active.publications }}" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Publications
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="/publications/conference">International Conference </a>
+                            <a class="dropdown-item" href="/publications/journal">International Journal </a>
+                            <a class="dropdown-item" href="/publications/patents">Patents</a>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="dropdown show">
+                        <a class="dropdown-toggle {{ menu_active.projects }}" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Projects
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="/projects/ongoing">On-Going Projects</a>
+                            <a class="dropdown-item" href="/projects/past">Past Projects</a>
+                        </div>
+                    </div>
+                </li>
+
+<!--                 <li>
+                    <div class="dropdown show">
+                        <a class="dropdown-toggle {{ menu_active.seminar }}" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Seminar
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="/seminar/thisweek">This Week Seminar</a>
+                            <a class="dropdown-item" href="/seminar/past">Previous Seminar(2020)</a>
+                        </div>
+                    </div>
+                </li> -->
+
+                <li>
+                    <div class="dropdown show">
+                        <a class="dropdown-toggle {{ menu_active.photo }}" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Photo
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="/photo/2021">2021</a>
+                            <a class="dropdown-item" href="/photo/2020">2020</a>
+                            <a class="dropdown-item" href="/photo/2019">~2019</a>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+        </nav>
+    </div>
+</header>
+
+{% block body %}
+{% endblock %}
+
+<footer>
+    <div id="footer" class="fh5co-border-line">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <p>Copyright 2021 Free Html5 <a>Neos</a>. All Rights Reserved. </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<!-- jQuery Easing -->
+<script type="text/javascript" src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+<!-- Bootstrap -->
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+<!-- Waypoints -->
+<script type="text/javascript" src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<!-- Owl carousel -->
+<script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script>
+<!-- Stellar -->
+<script type="text/javascript" src="{% static 'js/jquery.stellar.min.js' %}"></script>
+
+<!-- Main JS (Do not remove) -->
+<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+
+</body>
+</html>
+
