@@ -1,0 +1,35 @@
+{% extends 'core/base.html' %}
+
+{% load staticfiles %}
+
+{% block body %}
+  <div id="fh5co-services-section">
+    <div class="container">
+      <div class="row">
+        <div class="heading-section text-center">
+          <h2>{{ project_status }}</h2>
+        </div>
+
+        {% for project_info in project_list %}
+
+          <div class="row about">
+            <div class="col-md-12">
+              <div class="col-md-5 col-sm-5">
+                <div class="team-section-grid">
+                  <img src="{% static '' %}{{ project_info.img }}" style="width: 100%;" class="img-thumbnail">
+                </div>
+              </div>
+
+              <div class="col-md-7 col-sm-7">
+                <div style="font-weight: bold">{{ project_info.title }}</div>
+                <div>{{ project_info.detail }}</div>
+              </div>
+            </div>
+          </div>
+
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+{% endblock %}

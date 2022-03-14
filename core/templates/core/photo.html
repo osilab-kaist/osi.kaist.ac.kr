@@ -1,0 +1,38 @@
+{% extends 'core/base.html' %}
+
+{% load staticfiles %}
+
+{% block body %}
+  <div id="fh5co-contact-section">
+    <div class="container">
+      <div class="heading-section text-center" style="margin-bottom:0px">
+        <h2>Photos</h2>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
+          <div class="row">
+            {% for photo in photo_lst|slice:"1::2" %}
+              <div class="col-md-12 col-sm-12">
+                <img src="{% static 'core' %}/images/photo/{{ year }}/{{ photo }}" class="img-thumbnail">
+              </div>
+            {% endfor %}
+
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <div class="row">
+            {% for photo in photo_lst|slice:"0::2" %}
+              <div class="col-md-12 col-sm-12">
+                <img src="{% static 'core' %}/images/photo/{{ year }}/{{ photo }}" class="img-thumbnail">
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+{% endblock %}
