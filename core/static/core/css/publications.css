@@ -1,0 +1,41 @@
+.publication {
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid #ddd;
+  padding: 1rem 0;
+  line-height: 1.5;
+}
+
+.publication:first-child {
+  border-top: 1px solid #ddd;
+}
+
+.publication .publication-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #888;
+}
+
+.publication .publication-title{
+  font-size: 0.9375rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #222;
+  margin-bottom: 0.25rem;
+}
+
+.publication .publication-author {
+  font-size: 0.9375rem;
+  color: #666;
+}
+
+.publication .publication-venue {
+  font-size: 0.9375rem;
+  font-style: italic;
+  color: #666;
+}
+
+.publication .publication-links {
+  font-size: 0.9375rem;
+  color: #666;
+}

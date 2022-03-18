@@ -1,0 +1,96 @@
+.project {
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 48px rgba(0, 0, 0, 0.05), 0 2px 16px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+  overflow: hidden;
+  line-height: 1.8;
+  transition: background 0.25s ease-out;
+}
+
+.project:hover {
+  background: #f8f8f8;
+}
+
+.project.active  {
+  /*border: 1px solid #ff88a2;*/
+}
+
+.project.past {
+  /*border: 1px solid #ccc;*/
+}
+
+.project-image {
+  width: 100%;
+  max-height: 12rem;
+  object-fit: contain;
+  /*border-bottom: 6px solid #e70035;*/
+}
+
+@media (min-width: 768px) {
+  .project-image {
+    max-height: 18rem;
+  }
+}
+
+.project-info {
+  padding: 1.5rem 1rem;
+}
+
+.project-organization {
+  font-size: 0.8125rem;
+  color: #e70035;
+  font-weight: 700;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.project-title {
+  /*color: #e70035;*/
+  color: #444;
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 900;
+  line-height: 1.4;
+  margin-bottom: 0.25rem;
+}
+
+.project-period {
+  color: #999;
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .project-period {
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #ddd;
+  }
+}
+
+.project-summary {
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 0.75rem;
+  transition: opacity 0.5s, height 0.5s;
+}
+
+.project-summary-toggle {
+  display: block;
+  text-align: right;
+  font-size: 0.875rem;
+  color: #666;
+  font-weight: 700;
+  padding: 0.5rem 0;
+  margin-bottom: -0.5rem;
+  text-transform: uppercase;
+}
+
+.project-summary-toggle:hover {
+  color: #444;
+}
+
+.project-summary-toggle:active {
+  color: #444;
+}

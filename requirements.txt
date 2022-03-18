@@ -1,2 +1,4 @@
 django~=2.0
 pandas
+pillow
+django-bootstrap-v5

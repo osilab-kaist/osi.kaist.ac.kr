@@ -1,0 +1,70 @@
+.container-flex {
+  margin: 0 0.75rem;
+}
+
+.container.main {
+  max-width: none !important;
+}
+
+.photo-year {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #888;
+}
+
+@media (min-width: 768px) {
+  .photo-year {
+    font-size: 2.5rem;
+  }
+}
+
+.photo {
+  margin-bottom: 1rem;
+}
+
+.photo .photo-image {
+  width: 100%;
+  background: #222;
+  /*max-height: 30rem;*/
+  object-fit: cover;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 48px rgba(0, 0, 0, 0.1), 0 2px 16px rgba(0, 0, 0, 0.15);
+  margin-bottom: 0.5rem;
+}
+
+.photo .photo-image:hover {
+  object-fit: contain;
+}
+
+@media (min-width: 768px) {
+  .photo .photo-image {
+    border-radius: 1rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .photo .photo-image {
+    border-radius: 1.5rem;
+  }
+}
+
+
+.photo .photo-description {
+  font-size: 0.75rem;
+  color: #444;
+  font-weight: 400;
+}
+
+.mfp-bg {
+  background: #333;
+  opacity: 95%;
+}
+
+.mfp-figure:after {
+  box-shadow: 0 2px 48px rgba(0, 0, 0, 0.1), 0 2px 16px rgba(0, 0, 0, 0.15);
+}
+
+.mfp-title {
+  font-size: 0.875rem;
+  font-weight: 300;
+}

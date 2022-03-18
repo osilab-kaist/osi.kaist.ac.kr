@@ -1,0 +1,35 @@
+{% extends 'core/base.html' %}
+
+{% load staticfiles %}
+{% load bootstrap5 %}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+  <div class="container mb-5">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8 col-xl-6">
+        <h1>Login</h1>
+        <div class="alert alert-warning">
+          <i class="fas fa-exclamation-circle me-1"></i>
+          You must be a member of this lab to proceed.
+        </div>
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {% bootstrap_form form %}
+          <button class="btn btn-secondary" type="submit">Login</button>
+          <a class="btn" href="{% url 'signup' %}">Sign Up</a>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+
+
+
+
+
+
+

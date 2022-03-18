@@ -1,0 +1,14 @@
+.professor-profile-image {
+  height: 12rem;
+}
+
+@media (min-width: 768px) {
+  .professor-profile-image {
+    height: 18rem;
+  }
+}
+
+.professor-name {
+  font-weight: 900;
+  color: #444;
+}
