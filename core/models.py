@@ -44,7 +44,9 @@ POSITION_PHD = "PHD"
 POSITION_INTEGRATED = "INT"
 POSITION_POSTDOC = "POS"
 POSITION_VISITING = "VIS"
+POSITION_PROFESSOR = "PRO"
 position_choices = [
+    (POSITION_PROFESSOR, "Professor"),
     (POSITION_POSTDOC, "Postdoctoral Researcher"),
     (POSITION_PHD, "Ph.D. Student"),
     (POSITION_MS, "Master Student"),
@@ -131,18 +133,19 @@ class User(AbstractUser):
         else:
             return None
 
-
     @property
     def is_phd(self):
         return self.position in [POSITION_PHD, POSITION_INTEGRATED, POSITION_POSTDOC]
 
     @property
     def has_member_permissions(self):
-        return self.is_staff or self.position in [POSITION_MS, POSITION_PHD, POSITION_INTEGRATED, POSITION_POSTDOC]
+        return self.is_staff or self.position in [POSITION_MS, POSITION_PHD, POSITION_INTEGRATED, POSITION_POSTDOC,
+                                                  POSITION_PROFESSOR]
 
     @property
     def has_phd_permissions(self):
-        return self.is_staff or self.position in [POSITION_PHD, POSITION_INTEGRATED, POSITION_POSTDOC]
+        return self.is_staff or self.position in [POSITION_PHD, POSITION_INTEGRATED, POSITION_POSTDOC,
+                                                  POSITION_PROFESSOR]
 
 
 def generate_invitation_code(n=8, chars=string.ascii_uppercase + string.digits):
