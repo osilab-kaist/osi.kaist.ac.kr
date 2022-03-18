@@ -149,6 +149,7 @@ class SignupView(FormView):
 class ProfileView(LoginRequiredMixin, UpdateView):
     template_name = "core/profile.html"
     form_class = ProfileForm
+    success_url = reverse_lazy("students")
 
     def get_object(self, queryset=None):
         return self.request.user
@@ -192,8 +193,8 @@ class PublicationUpdateView(PhdRequiredMixin, UpdateView):
     template_name = "core/publication_update.html"
     object: Publication
     model = Publication
-    success_url = reverse_lazy("publications")
     slug_field = "id"
+    success_url = reverse_lazy("publications")
 
     def get_form_class(self):
         if self.request.user.is_staff:
@@ -233,8 +234,8 @@ class ProjectCreateView(MemberRequiredMixin, CreateView):
 class ProjectUpdateView(MemberRequiredMixin, UpdateView):
     template_name = "core/project_update.html"
     model = Project
-    success_url = reverse_lazy("projects")
     slug_field = "id"
+    success_url = reverse_lazy("projects")
 
     object: Project
 
@@ -276,8 +277,8 @@ class PhotoCreateView(MemberRequiredMixin, CreateView):
 class PhotoUpdateView(MemberRequiredMixin, UpdateView):
     template_name = "core/photo_update.html"
     model = Photo
-    success_url = reverse_lazy("photos")
     slug_field = "id"
+    success_url = reverse_lazy("photos")
 
     object: Photo
 
