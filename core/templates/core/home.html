@@ -11,10 +11,11 @@
     <div class="row justify-content-center">
       <div class="col-12 col-md-8 px-5 px-md-0">
         <p class="intro-paragraph">
-{#          OSI Lab studies optimization and statistical inference. We solve a wide range of research from the#}
-{#          theoretical analysis of traditional machine learning to the application of the latest deep learning.#}
-
-          Welcome to the Optimization and Statistical Inference Lab of KAIST AI.
+          {% if greeting %}
+            {{ greeting }} Welcome back to the Optimization and Statistical Inference Lab of KAIST AI.
+          {% else %}
+            Welcome to the Optimization and Statistical Inference Lab of KAIST AI.
+          {% endif %}
         </p>
         <p class="intro-paragraph">
           Our members tackle a wide range of problems, from theoretical analysis of traditional machine learning, to

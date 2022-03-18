@@ -4,7 +4,6 @@ import django.contrib.auth.views
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views.generic import TemplateView, FormView, CreateView, UpdateView
@@ -17,6 +16,27 @@ from core.models import Publication, Project, Photo, User
 class HomeView(TemplateView):
     template_name = "core/home.html"
 
+    def get_context_data(self, **kwargs):
+        context = dict()
+        user = self.request.user
+        if user.is_authenticated:
+            now = timezone.now()
+            if 0 <= now.hour < 5 or 17 <= now.hour:
+                greeting = "Good evening"
+            elif 5 <= now.hour < 12:
+                greeting = "Good morning"
+            else:
+                greeting = "Good afternoon"
+
+            greeting += ", "
+            if user.position == "PRO":
+                greeting += "Professor {}".format(user.last_name)
+            else:
+                greeting += user.first_name
+            greeting += "!"
+            context["greeting"] = greeting
+        return context
+
 
 class ProfessorView(TemplateView):
     template_name = "core/professor.html"
@@ -27,11 +47,21 @@ class StudentsView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = dict()
-        context["phd_students"] = User.objects.filter(position="PHD", profile_image__isnull=False, position_end_date__gte=timezone.now()).order_by('-position_start_date', 'first_name').all()
-        context["integrated_students"] = User.objects.filter(position="INT", profile_image__isnull=False, position_end_date__gte=timezone.now()).order_by('-position_start_date', 'first_name').all()
-        context["ms_students"] = User.objects.filter(position="MAS", profile_image__isnull=False, position_end_date__gte=timezone.now()).order_by('-position_start_date', 'first_name').all()
-        context["visiting_students"] = User.objects.filter(position="VIS", profile_image__isnull=False, position_end_date__gte=timezone.now()).order_by('-position_start_date', 'first_name').all()
-        context["alumni_students"] = User.objects.filter(position__in=["PHD", "INT", "MAS"],  position_end_date__lt=timezone.now()).order_by('-position_end_date', 'first_name').all()
+        context["phd_students"] = User.objects.filter(position="PHD", profile_image__isnull=False,
+                                                      position_end_date__gte=timezone.now()).order_by(
+            '-position_start_date', 'first_name').all()
+        context["integrated_students"] = User.objects.filter(position="INT", profile_image__isnull=False,
+                                                             position_end_date__gte=timezone.now()).order_by(
+            '-position_start_date', 'first_name').all()
+        context["ms_students"] = User.objects.filter(position="MAS", profile_image__isnull=False,
+                                                     position_end_date__gte=timezone.now()).order_by(
+            '-position_start_date', 'first_name').all()
+        context["visiting_students"] = User.objects.filter(position="VIS", profile_image__isnull=False,
+                                                           position_end_date__gte=timezone.now()).order_by(
+            '-position_start_date', 'first_name').all()
+        context["alumni_students"] = User.objects.filter(position__in=["PHD", "INT", "MAS"],
+                                                         position_end_date__lt=timezone.now()).order_by(
+            '-position_end_date', 'first_name').all()
         return context
 
 
@@ -40,9 +70,13 @@ class PublicationsView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = dict()
-        context["publications"] = Publication.objects.filter(type__in=["CON", "WOR", "JRN"], public=True).order_by('-published_date', 'authors').all()
-        context["unpublished_publications"] = Publication.objects.filter(type__in=["CON", "COW", "JRN"], public=False).order_by('-published_date', 'authors').all()
-        context["domestic_publications"] = Publication.objects.filter(type__in=["KCO", "KJR"]).order_by('-published_date', 'authors').all()
+        context["publications"] = Publication.objects.filter(type__in=["CON", "WOR", "JRN"], public=True).order_by(
+            '-published_date', 'authors').all()
+        context["unpublished_publications"] = Publication.objects.filter(type__in=["CON", "COW", "JRN"],
+                                                                         public=False).order_by('-published_date',
+                                                                                                'authors').all()
+        context["domestic_publications"] = Publication.objects.filter(type__in=["KCO", "KJR"]).order_by(
+            '-published_date', 'authors').all()
         return context
 
 
@@ -52,8 +86,10 @@ class ProjectsView(TemplateView):
     def get_context_data(self, **kwargs):
         context = dict()
         context["unpublished_projects"] = Project.objects.filter(public=False).order_by("start_date").all()
-        context["active_projects"] = Project.objects.filter(end_date__gte=timezone.now(), public=True).order_by("start_date").all()
-        context["past_projects"] = Project.objects.filter(end_date__lt=timezone.now(), public=True).order_by("start_date").all()
+        context["active_projects"] = Project.objects.filter(end_date__gte=timezone.now(), public=True).order_by(
+            "start_date").all()
+        context["past_projects"] = Project.objects.filter(end_date__lt=timezone.now(), public=True).order_by(
+            "start_date").all()
         return context
 
 
