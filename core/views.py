@@ -48,16 +48,20 @@ class StudentsView(TemplateView):
     def get_context_data(self, **kwargs):
         context = dict()
         context["phd_students"] = User.objects.filter(position="PHD", profile_image__isnull=False,
-                                                      position_end_date__gte=timezone.now()).order_by(
+                                                      position_end_date__gte=timezone.now()).exclude(
+            profile_image='').order_by(
             '-position_start_date', 'first_name').all()
         context["integrated_students"] = User.objects.filter(position="INT", profile_image__isnull=False,
-                                                             position_end_date__gte=timezone.now()).order_by(
+                                                             position_end_date__gte=timezone.now()).exclude(
+            profile_image='').order_by(
             '-position_start_date', 'first_name').all()
         context["ms_students"] = User.objects.filter(position="MAS", profile_image__isnull=False,
-                                                     position_end_date__gte=timezone.now()).order_by(
+                                                     position_end_date__gte=timezone.now()).exclude(
+            profile_image='').order_by(
             '-position_start_date', 'first_name').all()
         context["visiting_students"] = User.objects.filter(position="VIS", profile_image__isnull=False,
-                                                           position_end_date__gte=timezone.now()).order_by(
+                                                           position_end_date__gte=timezone.now()).exclude(
+            profile_image='').order_by(
             '-position_start_date', 'first_name').all()
         context["alumni_students"] = User.objects.filter(position__in=["PHD", "INT", "MAS"],
                                                          position_end_date__lt=timezone.now()).order_by(
