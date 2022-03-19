@@ -170,10 +170,10 @@ class Publication(models.Model):
 
     title = models.TextField()
     published_date = models.DateField(
-        help_text="Date of publication, used for sorting. Use conference start date for conferences.")
+        help_text="Date of publication, used for sorting. Enter the conference start date for conferences.")
     authors = models.TextField(help_text="E.g., 'Yoshua Bengio, Yann LeCun and Geoffrey Hinton'")
     venue = models.TextField(
-        help_text="Use abbreviations for top-tier AI conferences. Add paretheses around year for journal articles. E.g., 'NeurIPS (Oral) 2020', 'NeurIPS Workshop: \"Competition Track on Black-Box Optimization Challenge\" 2020', 'Nature (2020)', 'IEEE Transactions on Wireless Communications (2020)'")
+        help_text="Use abbreviations for top-tier AI conferences. Add parentheses around the publication year for journal articles. E.g., 'NeurIPS (Oral) 2020', 'NeurIPS Workshop: \"Competition Track on Black-Box Optimization Challenge\" 2020', 'Nature (2020)', 'IEEE Transactions on Wireless Communications (2020)'")
     year = models.IntegerField()
     image = models.ImageField(blank=True, null=True)
 
