@@ -208,7 +208,6 @@ class PublicationUpdateView(PhdRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.created_by = self.request.user
         self.object.last_modified_by = self.request.user
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
@@ -251,7 +250,6 @@ class ProjectUpdateView(MemberRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.created_by = self.request.user
         self.object.last_modified_by = self.request.user
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
@@ -297,7 +295,6 @@ class PhotoUpdateView(MemberRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.created_by = self.request.user
         self.object.last_modified_by = self.request.user
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
