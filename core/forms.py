@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 
-from core.models import Publication, Project, Photo, User, InvitationCode
+from core.models import Publication, Project, Photo, User, InvitationCode, Award
 
 
 class SignupForm(UserCreationForm):
@@ -97,6 +97,20 @@ class ProjectForm(forms.ModelForm):
         }
 
 
+class AwardForm(forms.ModelForm):
+    class Meta:
+        model = Award
+        fields = ["name", "awardees", "awarded_date", "venue", "paper", "image"]
+        widgets = {
+            "awardees": forms.TextInput(),
+            "awarded_date": forms.TextInput(attrs={
+                "placeholder": "YYYY-MM-DD",
+            }),
+            "venue": forms.TextInput(),
+            "paper": forms.TextInput(),
+        }
+
+
 class PhotoForm(forms.ModelForm):
     class Meta:
         model = Photo
@@ -148,6 +162,20 @@ class AdminProjectForm(forms.ModelForm):
             "end_date": forms.TextInput(attrs={
                 "placeholder": "YYYY-MM-DD",
             }),
+        }
+
+
+class AdminAwardForm(forms.ModelForm):
+    class Meta:
+        model = Award
+        fields = ["name", "awardees", "awarded_date", "venue", "paper", "image", "public"]
+        widgets = {
+            "awardees": forms.TextInput(),
+            "awarded_date": forms.TextInput(attrs={
+                "placeholder": "YYYY-MM-DD",
+            }),
+            "venue": forms.TextInput(),
+            "paper": forms.TextInput(),
         }
 
 

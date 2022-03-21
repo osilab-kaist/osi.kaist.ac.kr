@@ -1,0 +1,43 @@
+{% extends 'core/base.html' %}
+
+{% load staticfiles %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'core/css/publications.css' %}">
+  <link rel="stylesheet" href="{% static 'core/css/awards.css' %}">
+{% endblock %}
+
+{% block body %}
+  <div class="container mb-5">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-10 mb-5">
+        {% if request.user.has_member_permissions %}
+          <div class="d-flex">
+            <a class="btn btn-secondary ms-auto mb-3" href="{% url 'award_create' %}">
+              <i class="fas fa-pen-to-square"></i>
+              Add Award
+            </a>
+          </div>
+        {% endif %}
+
+        {% if request.user.has_member_permissions and unpublished_awards %}
+          <h1 class="mb-0">Pending Awards</h1>
+          <p>Only visible to graduate members.</p>
+          <div class="mb-5">
+            {% for award in unpublished_awards %}
+              {% include 'core/components/award.html' %}
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <h1>Awards</h1>
+        <div class="mb-5">
+          {% for award in awards %}
+            {% include 'core/components/award.html' %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

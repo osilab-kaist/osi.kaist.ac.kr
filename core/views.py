@@ -9,8 +9,8 @@ from django.utils import timezone
 from django.views.generic import TemplateView, FormView, CreateView, UpdateView
 
 from core.forms import PublicationForm, AdminPublicationForm, AdminProjectForm, ProjectForm, AdminPhotoForm, SignupForm, \
-    ProfileForm, PhotoFormWithoutImage, PhotoForm
-from core.models import Publication, Project, Photo, User
+    ProfileForm, PhotoFormWithoutImage, PhotoForm, AdminAwardForm, AwardForm
+from core.models import Publication, Project, Photo, User, Award
 
 
 class HomeView(TemplateView):
@@ -20,7 +20,7 @@ class HomeView(TemplateView):
         context = dict()
         user = self.request.user
         if user.is_authenticated:
-            now = timezone.now()
+            now = timezone.localtime(timezone.now())
             if 0 <= now.hour < 5 or 17 <= now.hour:
                 greeting = "Good evening"
             elif 5 <= now.hour < 12:
@@ -94,6 +94,16 @@ class ProjectsView(TemplateView):
             "start_date").all()
         context["past_projects"] = Project.objects.filter(end_date__lt=timezone.now(), public=True).order_by(
             "start_date").all()
+        return context
+
+
+class AwardsView(TemplateView):
+    template_name = "core/awards.html"
+
+    def get_context_data(self, **kwargs):
+        context = dict()
+        context["awards"] = Award.objects.filter(public=True).order_by('-awarded_date', 'awardees').all()
+        context["unpublished_awards"] = Award.objects.filter(public=False).order_by('-awarded_date', 'awardees').all()
         return context
 
 
@@ -251,6 +261,48 @@ class ProjectUpdateView(MemberRequiredMixin, UpdateView):
             return AdminProjectForm
         else:
             return ProjectForm
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.last_modified_by = self.request.user
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class AwardCreateView(MemberRequiredMixin, CreateView):
+    template_name = "core/award_create.html"
+    model = Award
+    success_url = reverse_lazy("awards")
+
+    object: Award
+
+    def get_form_class(self):
+        if self.request.user.is_staff:
+            return AdminAwardForm
+        else:
+            return AwardForm
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.created_by = self.request.user
+        self.object.last_modified_by = self.request.user
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class AwardUpdateView(MemberRequiredMixin, UpdateView):
+    template_name = "core/award_update.html"
+    model = Award
+    slug_field = "id"
+    success_url = reverse_lazy("awards")
+
+    object: Award
+
+    def get_form_class(self):
+        if self.request.user.is_staff:
+            return AdminAwardForm
+        else:
+            return AwardForm
 
     def form_valid(self, form):
         self.object = form.save(commit=False)

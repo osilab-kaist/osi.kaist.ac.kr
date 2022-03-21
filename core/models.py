@@ -227,7 +227,7 @@ class Project(models.Model):
     organization = models.TextField()
     members = models.TextField(help_text="E.g., 'Yoshua Bengio, Yann LeCun and Geoffrey Hinton'")
     image = models.ImageField()
-    summary = models.TextField(max_length=1000)
+    summary = models.TextField(max_length=800)
 
     start_date = models.DateField()
     end_date = models.DateField()
@@ -236,6 +236,24 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Award(models.Model):
+    created_date = models.DateTimeField(auto_now_add=True, db_index=True)
+    modified_date = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(User, models.SET_NULL, null=True, related_name="awards_created")
+    last_modified_by = models.ForeignKey(User, models.SET_NULL, null=True)
+
+    name = models.CharField("Award name", max_length=100)
+    awardees = models.TextField(help_text="E.g., 'Yoshua Bengio, Yann LeCun and Geoffrey Hinton'")
+    awarded_date = models.DateField()
+    venue = models.TextField(blank=True, null=True)
+    paper = models.TextField("Paper title", blank=True, null=True)
+    image = models.ImageField(blank=True, null=True)
+    public = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
 
 
 class Photo(models.Model):
