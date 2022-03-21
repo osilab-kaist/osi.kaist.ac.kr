@@ -24,7 +24,7 @@
           <p>Only visible to graduate members.</p>
           <div class="mb-5">
             {% for publication in unpublished_publications %}
-              <div class="publication {{ publication.year }} {{ publication.type_tag }}">
+              <div class="publication {{ publication.published_date.year }} {{ publication.type_tag }}">
                 <div class="publication-tag">
                   {{ publication.type_tag }}
                 </div>
@@ -59,7 +59,7 @@
         <h1>Publications</h1>
         <div class="mb-5">
           {% for publication in publications %}
-            <div class="publication {{ publication.year }} {{ publication.type_tag }}">
+            <div class="publication {{ publication.published_date.year }} {{ publication.type_tag }}">
               <div class="publication-tag">
                 {{ publication.type_tag }}
               </div>
@@ -95,7 +95,7 @@
           <p>Only visible to graduate members.</p>
           <div class="mb-5">
             {% for publication in domestic_publications %}
-              <div class="publication {{ publication.year }} {{ publication.type_tag }}">
+              <div class="publication {{ publication.published_date.year }} {{ publication.type_tag }}">
                 <div class="publication-tag">
                   {{ publication.type_tag }}
                 </div>

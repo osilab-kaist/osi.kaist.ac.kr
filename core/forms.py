@@ -68,7 +68,7 @@ class ProfileForm(forms.ModelForm):
 class PublicationForm(forms.ModelForm):
     class Meta:
         model = Publication
-        fields = ["type", "title", "published_date", "authors", "venue", "year", "image", "pdf_link", "code_link",
+        fields = ["type", "title", "published_date", "authors", "venue", "image", "pdf_link", "code_link",
                   "video_link"]
         widgets = {
             "published_date": forms.TextInput(attrs={
@@ -136,7 +136,7 @@ class PhotoFormWithoutImage(forms.ModelForm):
 class AdminPublicationForm(forms.ModelForm):
     class Meta:
         model = Publication
-        fields = ["type", "title", "published_date", "authors", "venue", "year", "image", "pdf_link", "code_link",
+        fields = ["type", "title", "published_date", "authors", "venue", "image", "pdf_link", "code_link",
                   "video_link", "public"]
         widgets = {
             "published_date": forms.TextInput(attrs={

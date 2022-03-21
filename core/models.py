@@ -174,7 +174,6 @@ class Publication(models.Model):
     authors = models.TextField(help_text="E.g., 'Yoshua Bengio, Yann LeCun and Geoffrey Hinton'")
     venue = models.TextField(
         help_text="Use abbreviations for top-tier AI conferences. Add parentheses around the publication year for journal articles. E.g., 'NeurIPS (Oral) 2020', 'NeurIPS Workshop: \"Competition Track on Black-Box Optimization Challenge\" 2020', 'Nature (2020)', 'IEEE Transactions on Wireless Communications (2020)'")
-    year = models.IntegerField()
     image = models.ImageField(blank=True, null=True)
 
     TYPE_INTERNATIONAL_CONFERENCE = "CON"
@@ -198,7 +197,7 @@ class Publication(models.Model):
     public = models.BooleanField(default=False)
 
     def __str__(self):
-        return '({}) {} et al., {}'.format(self.year, self.authors.split(",")[0], self.title)
+        return '({}) {} et al., {}'.format(self.published_date.year, self.authors.split(",")[0], self.title)
 
     type_tags = {
         "CON": "Conference",
