@@ -143,6 +143,10 @@ class SignupView(FormView):
         user = form.save(commit=False)
         user.position = form.invitation_code.position
         user.save()
+
+        form.invitation_code.uses_remaining -= 1
+        form.save()
+
         email = form.cleaned_data["email"]
         password = form.cleaned_data["password1"]
         user = authenticate(username=email, password=password)
