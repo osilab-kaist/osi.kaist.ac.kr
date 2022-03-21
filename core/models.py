@@ -60,17 +60,17 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     position = models.CharField(max_length=3, choices=position_choices)
     position_start_date = models.DateField("Join date", null=True,
-                                           help_text="For graduate students, use YYYY-03-01 for Spring entry and YYYY-09-01 for Fall entry.")
+                                           help_text="If you are a graduate student or alumni, enter your admission date for your current course. Use YYYY-03-01 for Spring admission and YYYY-09-01 for Fall admission.")
     position_end_date = models.DateField("Depart date", blank=True, null=True,
-                                         help_text="For graduate students, use YYYY-02-28 for Spring graduation and YYYY-08-31 for Fall graduation.")
+                                         help_text="If you are a graduate alumni, enter your final graduation date. Use YYYY-02-28 for Spring graduation and YYYY-08-31 for Fall graduation.")
     department = models.CharField(max_length=100, default="KAIST AI",
-                                  help_text="Department at KAIST for current students. E.g., 'KAIST AI', 'Industrial & Systems Engineering', 'Knowledge Service Engineering'.",
+                                  help_text="If you are a graduate student or alumni, enter your department at KAIST. E.g., 'KAIST AI', 'Industrial & Systems Engineering', 'Knowledge Service Engineering'.",
                                   blank=True, null=True)
     visiting_title = models.CharField(max_length=100,
-                                      help_text="Custom title for visiting researchers. Please use abbreviations for department names. E.g., 'UG at KAIST CS', 'PhD at SNU CS'.",
+                                      help_text="If you are a visiting reserach, enter a custom title. Please use abbreviations for department names. E.g., 'UG at KAIST CS', 'PhD at SNU CS'.",
                                       blank=True, null=True)
     degree = models.CharField(max_length=100, default="Artificial Intelligence",
-                              help_text="Name of final degree for graduated members. E.g., (MS in) 'Artificial Intelligence', (PhD in) 'Artificial Intelligence'. Do not include 'MS in', etc.",
+                              help_text="If you are a graduate alumni, enter the name of your final degree. E.g., (MS in) 'Artificial Intelligence', (PhD in) 'Artificial Intelligence'. Do not include 'MS in', etc.",
                               blank=True, null=True)
 
     profile_image = models.ImageField(blank=True, null=True,
