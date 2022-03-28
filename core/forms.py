@@ -13,6 +13,12 @@ class SignupForm(UserCreationForm):
         fields = ["first_name", "last_name", "email", "position_start_date", "department", "visiting_title",
                   "website", "birthday", "phone_number", "secondary_email", "research_topics"]
         widgets = {
+            "first_name": forms.TextInput(attrs={
+                "placeholder": "Yoshua",
+            }),
+            "last_name": forms.TextInput(attrs={
+                "placeholder": "Bengio",
+            }),
             "position_start_date": forms.TextInput(attrs={
                 "placeholder": "YYYY-MM-DD",
             }),
