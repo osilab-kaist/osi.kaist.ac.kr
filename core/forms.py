@@ -58,6 +58,12 @@ class ProfileForm(forms.ModelForm):
                   "department", "visiting_title", "website", "birthday", "phone_number", "secondary_email",
                   "research_topics"]
         widgets = {
+            "first_name": forms.TextInput(attrs={
+                "placeholder": "Yoshua",
+            }),
+            "last_name": forms.TextInput(attrs={
+                "placeholder": "Bengio",
+            }),
             "position_start_date": forms.TextInput(attrs={
                 "placeholder": "YYYY-MM-DD",
             }),
