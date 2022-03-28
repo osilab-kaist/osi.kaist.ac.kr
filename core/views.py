@@ -46,22 +46,19 @@ class StudentsView(TemplateView):
     template_name = "core/students.html"
 
     def get_context_data(self, **kwargs):
+        now = timezone.now()
         context = dict()
-        context["phd_students"] = User.objects.filter(position="PHD", profile_image__isnull=False,
-                                                      position_end_date__gte=timezone.now()).exclude(
-            profile_image='').order_by(
+        context["phd_students"] = User.objects.filter(position="PHD", profile_image__isnull=False).exclude(
+            position_end_date__lt=now, profile_image='').order_by(
             '-position_start_date', 'first_name').all()
-        context["integrated_students"] = User.objects.filter(position="INT", profile_image__isnull=False,
-                                                             position_end_date__gte=timezone.now()).exclude(
-            profile_image='').order_by(
+        context["integrated_students"] = User.objects.filter(position="INT", profile_image__isnull=False).exclude(
+            position_end_date__lt=now, profile_image='').order_by(
             '-position_start_date', 'first_name').all()
-        context["ms_students"] = User.objects.filter(position="MAS", profile_image__isnull=False,
-                                                     position_end_date__gte=timezone.now()).exclude(
-            profile_image='').order_by(
+        context["ms_students"] = User.objects.filter(position="MAS", profile_image__isnull=False).exclude(
+            position_end_date__lt=now, profile_image='').order_by(
             '-position_start_date', 'first_name').all()
-        context["visiting_students"] = User.objects.filter(position="VIS", profile_image__isnull=False,
-                                                           position_end_date__gte=timezone.now()).exclude(
-            profile_image='').order_by(
+        context["visiting_students"] = User.objects.filter(position="VIS", profile_image__isnull=False).exclude(
+            position_end_date__lt=now, profile_image='').order_by(
             '-position_start_date', 'first_name').all()
         context["alumni_students"] = User.objects.filter(position__in=["PHD", "INT", "MAS"],
                                                          position_end_date__lt=timezone.now()).order_by(
