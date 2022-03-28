@@ -124,7 +124,7 @@ class User(AbstractUser):
         if 1 <= self.position_start_date.month <= 5:
             return "Spring {}".format(self.position_start_date.year)
         else:
-            return "Fall{}".format(self.position_start_date.year)
+            return "Fall {}".format(self.position_start_date.year)
 
     @property
     def name(self):
