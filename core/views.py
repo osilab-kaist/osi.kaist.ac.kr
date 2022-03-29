@@ -73,7 +73,7 @@ class PublicationsView(TemplateView):
         context = dict()
         context["publications"] = Publication.objects.filter(type__in=["CON", "WOR", "JRN"], public=True).order_by(
             '-published_date', 'authors').all()
-        context["unpublished_publications"] = Publication.objects.filter(type__in=["CON", "COW", "JRN"],
+        context["unpublished_publications"] = Publication.objects.filter(type__in=["CON", "WOR", "JRN"],
                                                                          public=False).order_by('-published_date',
                                                                                                 'authors').all()
         context["domestic_publications"] = Publication.objects.filter(type__in=["KCO", "KJR"]).order_by(
