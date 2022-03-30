@@ -184,7 +184,7 @@ class MemberRequiredMixin(UserPassesTestMixin):
         return self.request.user.is_authenticated and self.request.user.has_member_permissions
 
 
-class PublicationCreateView(PhdRequiredMixin, CreateView):
+class PublicationCreateView(MemberRequiredMixin, CreateView):
     template_name = "core/publication_create.html"
     object: Publication
     model = Publication
@@ -204,7 +204,7 @@ class PublicationCreateView(PhdRequiredMixin, CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class PublicationUpdateView(PhdRequiredMixin, UpdateView):
+class PublicationUpdateView(MemberRequiredMixin, UpdateView):
     template_name = "core/publication_update.html"
     object: Publication
     model = Publication
@@ -224,7 +224,7 @@ class PublicationUpdateView(PhdRequiredMixin, UpdateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class ProjectCreateView(MemberRequiredMixin, CreateView):
+class ProjectCreateView(PhdRequiredMixin, CreateView):
     template_name = "core/project_create.html"
     model = Project
     success_url = reverse_lazy("projects")
@@ -245,7 +245,7 @@ class ProjectCreateView(MemberRequiredMixin, CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class ProjectUpdateView(MemberRequiredMixin, UpdateView):
+class ProjectUpdateView(PhdRequiredMixin, UpdateView):
     template_name = "core/project_update.html"
     model = Project
     slug_field = "id"
