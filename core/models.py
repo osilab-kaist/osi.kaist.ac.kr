@@ -88,7 +88,7 @@ class User(AbstractUser):
     objects = CustomUserManager()
 
     def __str__(self):
-        return self.email
+        return "{} {}".format(self.first_name, self.last_name)
 
     @property
     def is_member(self):
@@ -161,6 +161,20 @@ class InvitationCode(models.Model):
         return "[{}] {} ({} uses remaining)".format(self.get_position_display(), self.code, self.uses_remaining)
 
 
+class PublicationTag(models.Model):
+    created_date = models.DateTimeField(auto_now_add=True, db_index=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+    created_by = models.ForeignKey(User, models.SET_NULL, null=True, related_name="publication_tags_created")
+    last_modified_by = models.ForeignKey(User, models.SET_NULL, null=True)
+
+    name = models.TextField(max_length=50)
+    description = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Publication(models.Model):
     created_date = models.DateTimeField(auto_now_add=True, db_index=True)
     modified_date = models.DateTimeField(auto_now=True)
@@ -189,6 +203,8 @@ class Publication(models.Model):
         (TYPE_DOMESTIC_CONFERENCE, "Domestic Conference"),
     ]
     type = models.CharField(max_length=3, choices=type_choices)
+
+    tags = models.ManyToManyField(PublicationTag, "Tags", null=True, blank=True)
 
     pdf_link = models.URLField(null=True, blank=True)
     code_link = models.URLField(null=True, blank=True)

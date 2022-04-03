@@ -80,8 +80,11 @@ class ProfileForm(forms.ModelForm):
 class PublicationForm(forms.ModelForm):
     class Meta:
         model = Publication
-        fields = ["type", "title", "published_date", "authors", "venue", "image", "pdf_link", "code_link",
+        fields = ["type", "title", "published_date", "authors", "venue", "image", "tags", "pdf_link", "code_link",
                   "video_link"]
+        help_texts = {
+            "tags": "Hold down ctrl, or cmd on a Mac, to select more than one."
+        }
         widgets = {
             "published_date": forms.TextInput(attrs={
                 "placeholder": "YYYY-MM-DD",
@@ -148,8 +151,11 @@ class PhotoFormWithoutImage(forms.ModelForm):
 class AdminPublicationForm(forms.ModelForm):
     class Meta:
         model = Publication
-        fields = ["type", "title", "published_date", "authors", "venue", "image", "pdf_link", "code_link",
+        fields = ["type", "title", "published_date", "authors", "venue", "image", "tags", "pdf_link", "code_link",
                   "video_link", "public"]
+        help_texts = {
+            "tags": "Hold down ctrl, or cmd on a Mac, to select more than one."
+        }
         widgets = {
             "published_date": forms.TextInput(attrs={
                 "placeholder": "YYYY-MM-DD",
