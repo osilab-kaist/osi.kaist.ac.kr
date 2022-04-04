@@ -9,121 +9,46 @@
 
 {% block body %}
   <div class="container mb-5">
-  <div class="row justify-content-center">
-    <div class="col-12 col-xl-10">
-      {% if request.user.has_phd_permissions %}
-        <div class="d-flex mb-3">
-          <a class="btn btn-secondary ms-auto" href="{% url 'project_create' %}">
-            <i class="fas fa-pen-to-square"></i>
-            Add Project
-          </a>
-        </div>
-      {% endif %}
+    <div class="row justify-content-center">
+      <div class="col-12 col-xl-10">
+        {% if request.user.has_phd_permissions %}
+          <div class="d-flex mb-3">
+            <a class="btn btn-secondary ms-auto" href="{% url 'project_create' %}">
+              <i class="fas fa-pen-to-square"></i>
+              Add Project
+            </a>
+          </div>
+        {% endif %}
 
-      {% if request.user.has_phd_permissions and unpublished_projects %}
-        <h1 class="mb-0">Pending Projects</h1>
-        <p>Only visible to PhD students or higher.</p>
-        <div id="pending-project-list" class="row mb-5">
-          {% for project in unpublished_projects %}
-            <div class="col-12 col-md-6 col-lg-4">
-              <div class="project active">
-                <img class="project-image" src="{{ project.image.url }}">
-                <div class="project-info">
-                  <div class="project-organization">{{ project.organization }}</div>
-                  <div class="project-title">
-                    {{ project.title }}
-                    {% if request.user.has_phd_permissions %}
-                      <a class="project-button me-3" href="{% url 'project_update' project.id %}">
-                        <i class="fas fa-pen-to-square"></i>
-                      </a>
-                    {% endif %}
-                  </div>
-                  <div class="project-period">
-                    {{ project.start_date.year }}-{{ project.end_date.year }}
-                  </div>
-                  <div id="pending-project-summary-{{ forloop.counter0 }}" class="project-summary collapse"
-                       data-bs-parent="#pending-project-list">
-                    {{ project.summary }}
-                  </div>
-                  <a class="project-summary-toggle ms-auto" data-bs-toggle="collapse"
-                     href="#past-project-summary-{{ forloop.counter0 }}" role="button"
-                     aria-expanded="false" aria-controls="collapseExample">
-                    See More
-                  </a>
-                </div>
+        {% if request.user.has_phd_permissions and unpublished_projects %}
+          <h1 class="mb-0">Pending Projects</h1>
+          <p>Only visible to PhD students or higher.</p>
+          <div id="pending-project-list" class="row mb-5">
+            {% for project in unpublished_projects %}
+              <div class="col-12 col-md-6 col-lg-4">
+                {% include 'core/components/project.html' with project_type="pending" %}
               </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <h1>Active Projects</h1>
+        <div id="active-project-list" class="row mb-5">
+          {% for project in active_projects %}
+            <div class="col-12 col-md-6 col-lg-4">
+              {% include 'core/components/project.html' with project_type="active" %}
             </div>
           {% endfor %}
         </div>
-      {% endif %}
-
-      <h1>Active Projects</h1>
-      <div id="active-project-list" class="row mb-5">
-        {% for project in active_projects %}
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="project active">
-              <img class="project-image" src="{{ project.image.url }}">
-              <div class="project-info">
-                <div class="project-organization">{{ project.organization }}</div>
-                <div class="project-title">
-                  {{ project.title }}
-                  {% if request.user.has_phd_permissions %}
-                    <a class="project-button me-3" href="{% url 'project_update' project.id %}">
-                      <i class="fas fa-pen-to-square"></i>
-                    </a>
-                  {% endif %}
-                </div>
-                <div class="project-period">
-                  {{ project.start_date.year }}-{{ project.end_date.year }}
-                </div>
-                <div id="active-project-summary-{{ forloop.counter0 }}" class="project-summary collapse"
-                     data-bs-parent="#active-project-list">
-                  {{ project.summary }}
-                </div>
-                <a class="project-summary-toggle ms-auto" data-bs-toggle="collapse"
-                   href="#active-project-summary-{{ forloop.counter0 }}" role="button"
-                   aria-expanded="false" aria-controls="collapseExample">
-                  See More
-                </a>
-              </div>
+        <h1>Past Projects</h1>
+        <div id="past-project-list" class="row mb-5">
+          {% for project in past_projects %}
+            <div class="col-12 col-md-6 col-lg-4">
+              {% include 'core/components/project.html' with project_type="past" %}
             </div>
-          </div>
-        {% endfor %}
-      </div>
-      <h1>Past Projects</h1>
-      <div id="past-project-list" class="row mb-5">
-        {% for project in past_projects %}
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="project past">
-              <img class="project-image" src="{{ project.image.url }}">
-              <div class="project-info">
-                <div class="project-organization">{{ project.organization }}</div>
-                <div class="project-title">
-                  {{ project.title }}
-                  {% if request.user.has_phd_permissions %}
-                    <a class="project-button me-3" href="{% url 'project_update' project.id %}">
-                      <i class="fas fa-pen-to-square"></i>
-                    </a>
-                  {% endif %}
-                </div>
-                <div class="project-period">
-                  {{ project.start_date.year }}-{{ project.end_date.year }}
-                </div>
-                <div id="past-project-summary-{{ forloop.counter0 }}" class="project-summary collapse"
-                     data-bs-parent="#past-project-list">
-                  {{ project.summary }}
-                </div>
-                <a class="project-summary-toggle ms-auto" data-bs-toggle="collapse"
-                   href="#past-project-summary-{{ forloop.counter0 }}" role="button"
-                   aria-expanded="false" aria-controls="collapseExample">
-                  See More
-                </a>
-              </div>
-            </div>
-          </div>
-        {% endfor %}
+          {% endfor %}
+        </div>
       </div>
     </div>
   </div>
-
 {% endblock %}
