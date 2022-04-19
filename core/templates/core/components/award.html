@@ -11,11 +11,24 @@
       {{ award.name }}
     {% endif %}
   </div>
-  {% if award.paper %}
-    <div class="award-paper">
+  <div>
+    {% if award.paper %}
+    <span class="award-paper">
       Paper: "{{ award.paper }}"
-    </div>
-  {% endif %}
+    </span>
+    {% endif %}
+    <span class="award-links">
+      {% if award.pdf_link %}
+        [<a href="{{ award.pdf_link }}">PDF</a>]
+      {% endif %}
+      {% if award.video_link %}
+        [<a href="{{ award.video_link }}">Video</a>]
+      {% endif %}
+      {% if award.code_link %}
+        [<a href="{{ award.code_link }}">Code</a>]
+      {% endif %}
+    </span>
+  </div>
   <div class="award-awardees">{{ award.awardees }}</div>
 </div>
 

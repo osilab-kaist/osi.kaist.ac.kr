@@ -115,7 +115,7 @@ class ProjectForm(forms.ModelForm):
 class AwardForm(forms.ModelForm):
     class Meta:
         model = Award
-        fields = ["name", "awardees", "awarded_date", "venue", "paper", "image"]
+        fields = ["name", "awardees", "awarded_date", "venue", "paper", "image", "pdf_link", "code_link", "video_link"]
         widgets = {
             "awardees": forms.TextInput(),
             "awarded_date": forms.TextInput(attrs={
@@ -169,7 +169,8 @@ class AdminPublicationForm(forms.ModelForm):
 class AdminProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ["title", "organization", "members", "image", "summary", "start_date", "end_date", "priority", "public"]
+        fields = ["title", "organization", "members", "image", "summary", "start_date", "end_date", "priority",
+                  "public"]
         widgets = {
             "title": forms.TextInput(),
             "organization": forms.TextInput(),
@@ -186,7 +187,8 @@ class AdminProjectForm(forms.ModelForm):
 class AdminAwardForm(forms.ModelForm):
     class Meta:
         model = Award
-        fields = ["name", "awardees", "awarded_date", "venue", "paper", "image", "public"]
+        fields = ["name", "awardees", "awarded_date", "venue", "paper", "image", "pdf_link", "code_link", "video_link",
+                  "public"]
         widgets = {
             "awardees": forms.TextInput(),
             "awarded_date": forms.TextInput(attrs={

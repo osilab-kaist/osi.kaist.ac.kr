@@ -271,6 +271,10 @@ class Award(models.Model):
     image = models.ImageField(blank=True, null=True)
     public = models.BooleanField(default=False)
 
+    pdf_link = models.URLField(null=True, blank=True)
+    code_link = models.URLField(null=True, blank=True)
+    video_link = models.URLField(null=True, blank=True)
+
     def __str__(self):
         return self.name
 
