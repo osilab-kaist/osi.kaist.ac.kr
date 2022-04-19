@@ -1,41 +1,101 @@
-.publication {
-  margin-bottom: 0.5rem;
-  border-bottom: 1px solid #ddd;
-  padding: 1rem 0;
-  line-height: 1.5;
+.filter-selection *:checked + .form-check-label {
+  color: black;
 }
 
-.publication:first-child {
-  border-top: 1px solid #ddd;
+.publication {
+  margin-bottom: -1px;
+  border-bottom: 1px solid #d8d8d8;
+  border-top: 1px solid #d8d8d8;
+  padding: 1.125rem 0;
+  line-height: 1.5;
 }
 
 .publication .publication-tag {
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 900;
   text-transform: uppercase;
-  color: #888;
+  color: #F03861;
 }
 
-.publication .publication-title{
-  font-size: 0.9375rem;
+.publication .publication-title {
+  font-size: 0.875rem;
   font-weight: 700;
   text-transform: uppercase;
-  color: #222;
+  color: #444;
   margin-bottom: 0.25rem;
 }
 
+.publication .publication-title a {
+  color: inherit;
+}
+
 .publication .publication-author {
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   color: #666;
 }
 
 .publication .publication-venue {
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   font-style: italic;
   color: #666;
 }
 
+@media (min-width: 768px) {
+  .publication .publication-title {
+    font-size: 0.9375rem;
+  }
+
+  .publication .publication-author {
+    font-size: 0.9375rem;
+  }
+
+  .publication .publication-venue {
+    font-size: 0.9375rem;
+  }
+}
+
+
 .publication .publication-links {
   font-size: 0.9375rem;
   color: #666;
+}
+
+.btn.btn-filter {
+  border-radius: 0.5rem;
+  border: #aaa 1px solid;
+  color: #444;
+}
+
+.btn-filter:focus {
+  outline: 0;
+  box-shadow: none;
+}
+
+.btn-filter:hover,
+.btn-filter.active,
+.btn-filter:active {
+  background: #eee;
+}
+
+.filter-selection {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+}
+
+.filter-selection .form-check-label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #666;
+  padding: 0.25rem 0.5rem;
+}
+
+.offcanvas {
+  padding: 1rem;
 }

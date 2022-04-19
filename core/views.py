@@ -10,7 +10,7 @@ from django.views.generic import TemplateView, FormView, CreateView, UpdateView
 
 from core.forms import PublicationForm, AdminPublicationForm, AdminProjectForm, ProjectForm, AdminPhotoForm, SignupForm, \
     ProfileForm, PhotoFormWithoutImage, PhotoForm, AdminAwardForm, AwardForm
-from core.models import Publication, Project, Photo, User, Award
+from core.models import Publication, Project, Photo, User, Award, PublicationTag
 
 
 class HomeView(TemplateView):
@@ -70,14 +70,30 @@ class PublicationsView(TemplateView):
     template_name = "core/publications.html"
 
     def get_context_data(self, **kwargs):
+        publications = Publication.objects.filter(type__in=["CON", "WOR", "JRN"], public=True).order_by(
+            '-published_date', 'authors').prefetch_related("tags").all()
+        unpublished_publications = Publication.objects.filter(type__in=["CON", "WOR", "JRN"], public=False).order_by(
+            '-published_date', 'authors').prefetch_related("tags").all()
+        domestic_publications = Publication.objects.filter(type__in=["KCO", "KJR"]).order_by(
+            '-published_date', 'authors').prefetch_related("tags").all()
+
         context = dict()
-        context["publications"] = Publication.objects.filter(type__in=["CON", "WOR", "JRN"], public=True).order_by(
-            '-published_date', 'authors').all()
-        context["unpublished_publications"] = Publication.objects.filter(type__in=["CON", "WOR", "JRN"],
-                                                                         public=False).order_by('-published_date',
-                                                                                                'authors').all()
-        context["domestic_publications"] = Publication.objects.filter(type__in=["KCO", "KJR"]).order_by(
-            '-published_date', 'authors').all()
+        context["publications"] = publications
+        context["unpublished_publications"] = unpublished_publications
+        context["domestic_publications"] = domestic_publications
+
+        years = set()
+        for pub in publications:
+            years.add(pub.published_date.year)
+
+        context["years"] = list(sorted(list(years), reverse=True))
+        context["types"] = [
+            ('JRN', 'Journal'),
+            ('CON', 'Conference'),
+            ('WOR', 'Workshop'),
+        ]
+        context["research_areas"] = PublicationTag.objects.order_by("name").all()
+
         return context
 
 

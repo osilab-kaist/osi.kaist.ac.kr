@@ -4,6 +4,7 @@
 
 {% block head %}
   <link rel="stylesheet" href="{% static 'core/css/publications.css' %}">
+  <script src="{% static 'core/js/publications.js' %}"></script>
 {% endblock %}
 
 {% block body %}
@@ -19,110 +20,106 @@
           </div>
         {% endif %}
 
+        <h1>Publications</h1>
+        <div class="mb-5">
+          <a class="btn btn-filter me-1 mb-2" id="filter-type-toggle" data-bs-toggle="offcanvas"
+             href="#offcanvas-filter-type" role="button">
+            Type
+          </a>
+          <a class="btn btn-filter me-1 mb-2" id="filter-year-toggle" data-bs-toggle="offcanvas"
+             href="#offcanvas-filter-year" role="button">
+            Year
+          </a>
+          <a class="btn btn-filter me-0 mb-2" id="filter-area-toggle" data-bs-toggle="offcanvas"
+             href="#offcanvas-filter-research-area"
+             role="button">
+            Research Area
+          </a>
+          <button class="btn btn-sm text-danger me-1 mb-2" id="filter-reset" role="button" style="display: none;">
+            Reset
+          </button>
+        </div>
+
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas-filter-year"
+             aria-labelledby="offcanvasExampleLabel">
+          <div class="offcanvas-header">
+            <h2 class="offcanvas-title" id="offcanvasExampleLabel">Filter by Year</h2>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <div class="w-100">
+              {% for year in years %}
+                <div class="filter-selection">
+                  <input type="checkbox" class="form-check-input filter-year" id="filter-year-{{ year }}"
+                         data-year="{{ year }}" autocomplete="off">
+                  <label class="form-check-label" for="filter-year-{{ year }}">{{ year }}</label>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas-filter-type"
+             aria-labelledby="offcanvasExampleLabel">
+          <div class="offcanvas-header">
+            <h2 class="offcanvas-title" id="offcanvasExampleLabel">Filter by Publication Type</h2>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <div class="w-100">
+              {% for type in types %}
+                <div class="filter-selection">
+                  <input type="checkbox" class="form-check-input filter-type" id="filter-type-{{ type.0 }}"
+                         data-type="{{ type.0 }}" autocomplete="off">
+                  <label class="form-check-label" for="filter-type-{{ type.0 }}">{{ type.1 }}</label>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvas-filter-research-area"
+             aria-labelledby="offcanvasExampleLabel">
+          <div class="offcanvas-header">
+            <h2 class="offcanvas-title" id="offcanvasExampleLabel">Filter by Research Area</h2>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <div class="w-100">
+              {% for area in research_areas %}
+                <div class="filter-selection">
+                  <input type="checkbox" class="form-check-input filter-area" id="filter-area-{{ area.id }}"
+                         data-area-id="{{ area.id }}" autocomplete="off">
+                  <label class="form-check-label" for="filter-area-{{ area.id }}">{{ area.name }}</label>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
         {% if request.user.has_member_permissions and unpublished_publications %}
-          <h1 class="mb-0">Pending Publications</h1>
+          <h2 class="mb-0">Pending Publications</h2>
           <p>Only visible to graduate members.</p>
           <div class="mb-5">
             {% for publication in unpublished_publications %}
-              <div class="publication {{ publication.published_date.year }} {{ publication.type_tag }}">
-                <div class="publication-tag">
-                  {{ publication.type_tag }}
-                </div>
-                <div class="publication-title">
-                  {{ publication.title }}
-                  {% if request.user.has_member_permissions %}
-                    <a class="ms-2" href="{% url 'publication_update' publication.id %}">
-                      <i class="fas fa-pen-to-square"></i>
-                    </a>
-                  {% endif %}
-                </div>
-                <div>
-                  <span class="publication-venue">{{ publication.venue }}</span>
-                  <span class="publication-links">
-                  {% if publication.pdf_link %}
-                    [<a href="{{ publication.pdf_link }}">PDF</a>]
-                  {% endif %}
-                    {% if publication.video_link %}
-                      [<a href="{{ publication.video_link }}">Video</a>]
-                    {% endif %}
-                    {% if publication.code_link %}
-                      [<a href="{{ publication.code_link }}">Code</a>]
-                    {% endif %}
-                </span>
-                </div>
-                <div class="publication-author">{{ publication.authors }}</div>
-              </div>
+              {% include "core/components/publication.html" %}
             {% endfor %}
           </div>
         {% endif %}
 
-        <h1>Publications</h1>
+        <h2>International</h2>
         <div class="mb-5">
           {% for publication in publications %}
-            <div class="publication {{ publication.published_date.year }} {{ publication.type_tag }}">
-              <div class="publication-tag">
-                {{ publication.type_tag }}
-              </div>
-              <div class="publication-title">
-                {{ publication.title }}
-                {% if request.user.has_member_permissions %}
-                  <a class="ms-2" href="{% url 'publication_update' publication.id %}">
-                    <i class="fas fa-pen-to-square"></i>
-                  </a>
-                {% endif %}
-              </div>
-              <div>
-                <span class="publication-venue">{{ publication.venue }}</span>
-                <span class="publication-links">
-                {% if publication.pdf_link %}
-                  [<a href="{{ publication.pdf_link }}">PDF</a>]
-                {% endif %}
-                  {% if publication.video_link %}
-                    [<a href="{{ publication.video_link }}">Video</a>]
-                  {% endif %}
-                  {% if publication.code_link %}
-                    [<a href="{{ publication.code_link }}">Code</a>]
-                  {% endif %}
-              </span>
-              </div>
-              <div class="publication-author">{{ publication.authors }}</div>
-            </div>
+            {% include "core/components/publication.html" %}
           {% endfor %}
         </div>
 
         {% if request.user.has_member_permissions %}
-          <h1 class="mb-0">Domestic</h1>
+          <h2 class="mb-0">Domestic</h2>
           <p>Only visible to graduate members.</p>
           <div class="mb-5">
             {% for publication in domestic_publications %}
-              <div class="publication {{ publication.published_date.year }} {{ publication.type_tag }}">
-                <div class="publication-tag">
-                  {{ publication.type_tag }}
-                </div>
-                <div class="publication-title">
-                  {{ publication.title }}
-                  {% if request.user.has_member_permissions %}
-                    <a class="ms-2" href="{% url 'publication_update' publication.id %}">
-                      <i class="fas fa-pen-to-square"></i>
-                    </a>
-                  {% endif %}
-                </div>
-                <div>
-                  <span class="publication-venue">{{ publication.venue }}</span>
-                  <span class="publication-links">
-                  {% if publication.pdf_link %}
-                    [<a href="{{ publication.pdf_link }}">PDF</a>]
-                  {% endif %}
-                    {% if publication.video_link %}
-                      [<a href="{{ publication.video_link }}">Video</a>]
-                    {% endif %}
-                    {% if publication.code_link %}
-                      [<a href="{{ publication.code_link }}">Code</a>]
-                    {% endif %}
-                </span>
-                </div>
-                <div class="publication-author">{{ publication.authors }}</div>
-              </div>
+              {% include "core/components/publication.html" %}
             {% endfor %}
           </div>
         {% endif %}

@@ -3,16 +3,16 @@
     {{ award.venue }}
   </div>
   <div class="award-name">
-    {{ award.name }}
     {% if request.user.has_member_permissions %}
-      <a class="ms-2" href="{% url 'award_update' award.id %}">
-        <i class="fas fa-pen-to-square"></i>
+      <a href="{% url 'award_update' award.id %}">
+        {{ award.name }}
       </a>
+    {% else %}
+      {{ award.name }}
     {% endif %}
   </div>
   {% if award.paper %}
     <div class="award-paper">
-{#      <i class="far fa-file-lines"></i>#}
       Paper: "{{ award.paper }}"
     </div>
   {% endif %}

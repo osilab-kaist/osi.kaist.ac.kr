@@ -1,12 +1,9 @@
 .award {
-  margin-bottom: 0.5rem;
-  border-bottom: 1px solid #ddd;
-  padding: 1rem 0;
+  margin-bottom: -1px;
+  border-bottom: 1px solid #d8d8d8;
+  border-top: 1px solid #d8d8d8;
+  padding: 1.125rem 0;
   line-height: 1.5;
-}
-
-.award:first-child {
-  border-top: 1px solid #ddd;
 }
 
 .award .award-name {
@@ -15,6 +12,10 @@
   text-transform: uppercase;
   color: #222;
   /*margin-bottom: 0.25rem;*/
+}
+
+.award .award-name a {
+  color: inherit;
 }
 
 .award .award-paper {
