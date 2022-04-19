@@ -241,7 +241,8 @@ class Project(models.Model):
     title = models.TextField()
     organization = models.TextField()
     members = models.TextField(help_text="E.g., 'Yoshua Bengio, Yann LeCun and Geoffrey Hinton'")
-    previous_members = models.TextField(help_text="E.g., 'Yoshua Bengio, Yann LeCun and Geoffrey Hinton'")
+    previous_members = models.TextField(help_text="E.g., 'Yoshua Bengio, Yann LeCun and Geoffrey Hinton'", blank=True,
+                                        null=True)
     image = models.ImageField()
     summary = models.TextField(max_length=800)
 
