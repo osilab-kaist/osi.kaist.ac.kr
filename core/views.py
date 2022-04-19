@@ -86,11 +86,11 @@ class ProjectsView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = dict()
-        context["unpublished_projects"] = Project.objects.filter(public=False).order_by("start_date").all()
+        context["unpublished_projects"] = Project.objects.filter(public=False).order_by("-priority", "start_date").all()
         context["active_projects"] = Project.objects.filter(end_date__gte=timezone.now(), public=True).order_by(
-            "start_date").all()
+            "-priority", "start_date").all()
         context["past_projects"] = Project.objects.filter(end_date__lt=timezone.now(), public=True).order_by(
-            "start_date").all()
+            "-priority", "start_date").all()
         return context
 
 

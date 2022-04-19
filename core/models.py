@@ -241,11 +241,14 @@ class Project(models.Model):
     title = models.TextField()
     organization = models.TextField()
     members = models.TextField(help_text="E.g., 'Yoshua Bengio, Yann LeCun and Geoffrey Hinton'")
+    previous_members = models.TextField(help_text="E.g., 'Yoshua Bengio, Yann LeCun and Geoffrey Hinton'")
     image = models.ImageField()
     summary = models.TextField(max_length=800)
 
     start_date = models.DateField()
     end_date = models.DateField()
+
+    priority = models.IntegerField(default=0, help_text="Higher comes first")
 
     public = models.BooleanField(default=False)
 
