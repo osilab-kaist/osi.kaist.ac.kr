@@ -169,7 +169,7 @@ class AdminPublicationForm(forms.ModelForm):
 class AdminProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ["title", "organization", "members", "image", "summary", "start_date", "end_date", "public"]
+        fields = ["title", "organization", "members", "image", "summary", "start_date", "end_date", "priority", "public"]
         widgets = {
             "title": forms.TextInput(),
             "organization": forms.TextInput(),
