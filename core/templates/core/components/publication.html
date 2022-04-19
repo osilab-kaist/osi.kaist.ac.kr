@@ -9,7 +9,6 @@
     {% if request.user.has_member_permissions %}
       <a href="{% url 'publication_update' publication.id %}">
         {{ publication.title }}
-        <i class="fas fa-chevron-right"></i>
       </a>
     {% else %}
       {{ publication.title }}
