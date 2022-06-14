@@ -48,6 +48,9 @@ class StudentsView(TemplateView):
     def get_context_data(self, **kwargs):
         now = timezone.now()
         context = dict()
+        context["postdocs"] = User.objects.filter(position="POS", profile_image__isnull=False).exclude(
+            position_end_date__lt=now).exclude(profile_image='').order_by(
+            'position_start_date', 'first_name').all()
         context["phd_students"] = User.objects.filter(position="PHD", profile_image__isnull=False).exclude(
             position_end_date__lt=now).exclude(profile_image='').order_by(
             'position_start_date', 'first_name').all()

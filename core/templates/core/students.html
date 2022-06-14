@@ -12,6 +12,29 @@
   <div class="container mb-5">
   <div class="row justify-content-center">
     <div class="col-12 col-xl-10">
+      {% if postdocs.exists %}
+        <h1>Postdocs</h1>
+        <div class="row mb-4">
+          {% for student in postdocs %}
+            <div class="student phd col-6 col-md-4 col-lg-3">
+              <img src="{{ student.profile_image.url }}" alt="..." class="student-image">
+              <div class="student-info">
+                <div class="student-name">{{ student.name }}</div>
+                <div class="student-title">{{ student.course_shorthand }} Student at {{ student.department }}
+                  ({{ student.entry_semester }})
+                </div>
+                <div class="student-email">
+                  <i class="far fa-envelope me-1"></i>{{ student.email|alter_email }}
+                </div>
+                {% if student.website %}
+                  <a class="student-website" href="{{ student.website }}">Website</a>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
       <h1>PhD Students</h1>
       <div class="row mb-4">
         {% for student in phd_students %}
