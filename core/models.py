@@ -152,6 +152,10 @@ def generate_invitation_code(n=8, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(n))
 
 
+def generate_admin_token(n=40, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.choice(chars) for _ in range(n))
+
+
 class InvitationCode(models.Model):
     code = models.CharField(max_length=20, default=generate_invitation_code)
     position = models.CharField(max_length=3, choices=position_choices)
@@ -292,3 +296,27 @@ class Photo(models.Model):
 
     def __str__(self):
         return self.description
+
+
+class AdminToken(models.Model):
+    created_date = models.DateTimeField(auto_now_add=True, db_index=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+    token = models.CharField(max_length=40, default=generate_admin_token)
+
+    def __str__(self):
+        return self.token
+
+
+class GPUStatus(models.Model):
+    created_date = models.DateTimeField(auto_now_add=True, db_index=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+    server_name = models.TextField(max_length=100)
+    status = models.TextField()
+
+    def __str__(self):
+        return "[{}] {}".format(self.server_name, self.created_date.strftime("%Y-%m-%d %H:%M:%S"))
+
+    class Meta:
+        verbose_name_plural = "GPU status"

@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 
-from core.models import Publication, Project, Photo, User, InvitationCode, Award
+from core.models import Publication, Project, Photo, User, InvitationCode, Award, GPUStatus, AdminToken
 
 
 class SignupForm(UserCreationForm):
@@ -146,6 +146,25 @@ class PhotoFormWithoutImage(forms.ModelForm):
                 "placeholder": "YYYY-MM-DD",
             }),
         }
+
+
+class GPUStatusForm(forms.ModelForm):
+    admin_token = forms.CharField(max_length=40)
+
+    class Meta:
+        model = GPUStatus
+        fields = ["server_name", "status"]
+        widgets = {
+            "server_name": forms.TextInput(attrs={
+                "placeholder": "osi1",
+            }),
+        }
+
+    def clean_admin_token(self):
+        token = self.cleaned_data["admin_token"]
+        if not AdminToken.objects.filter(token=token).first():
+            raise ValidationError("Invalid admin token")
+        return token
 
 
 class AdminPublicationForm(forms.ModelForm):

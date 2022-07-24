@@ -6,11 +6,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, FormView, CreateView, UpdateView
 
 from core.forms import PublicationForm, AdminPublicationForm, AdminProjectForm, ProjectForm, AdminPhotoForm, SignupForm, \
-    ProfileForm, PhotoFormWithoutImage, PhotoForm, AdminAwardForm, AwardForm
-from core.models import Publication, Project, Photo, User, Award, PublicationTag
+    ProfileForm, PhotoFormWithoutImage, PhotoForm, AdminAwardForm, AwardForm, GPUStatusForm
+from core.mixins import JsonableResponseMixin
+from core.models import Publication, Project, Photo, User, Award, PublicationTag, GPUStatus
 
 
 class HomeView(TemplateView):
@@ -370,3 +373,10 @@ class PhotoUpdateView(MemberRequiredMixin, UpdateView):
         self.object.last_modified_by = self.request.user
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class GPUStatusCreateAPIView(JsonableResponseMixin, CreateView):
+    model = GPUStatus
+    form_class = GPUStatusForm
+    success_url = "/"

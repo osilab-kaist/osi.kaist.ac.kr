@@ -24,5 +24,7 @@ urlpatterns = [
     path("photo/create/", views.PhotoCreateView.as_view(), name="photo_create"),
     path("photo/<slug:slug>/update/", views.PhotoUpdateView.as_view(), name="photo_update"),
 
+    path("api/gpu-status/create/", views.GPUStatusCreateAPIView.as_view(), name="gpu_status_create_api"),
+
     path("", views.HomeView.as_view(), name="home"),
 ]

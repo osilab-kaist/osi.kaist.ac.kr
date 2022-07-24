@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from core.models import User, Publication, Photo, Project, InvitationCode, Award, PublicationTag
+from core.models import User, Publication, Photo, Project, InvitationCode, Award, PublicationTag, AdminToken, GPUStatus
 
 
 @admin.register(User)
@@ -56,4 +56,14 @@ class PhotoAdmin(admin.ModelAdmin):
 
 @admin.register(InvitationCode)
 class InvitationCodeAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(AdminToken)
+class AdminTokenAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(GPUStatus)
+class GPUStatusAdmin(admin.ModelAdmin):
     pass
