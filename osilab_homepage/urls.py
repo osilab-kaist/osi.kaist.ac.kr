@@ -7,6 +7,6 @@ from django.conf import settings
 
 urlpatterns = [
     url('', include('core.urls')),
-    url(r'^admin/', admin.site.urls),
+    # url(r'^admin/', admin.site.urls),
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root':settings.MEDIA_ROOT}),
 ]
