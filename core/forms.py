@@ -54,9 +54,8 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ["position", "profile_image", "first_name", "last_name", "email", "position_start_date",
-                  "position_end_date", "degree",
-                  "department", "visiting_title", "website", "birthday", "phone_number", "secondary_email",
-                  "research_topics"]
+                  "position_end_date", "degree", "department", "visiting_title", "website", "github", "scholar",
+                  "twitter", "birthday", "phone_number", "secondary_email", "research_topics"]
         widgets = {
             "first_name": forms.TextInput(attrs={
                 "placeholder": "Yoshua",

@@ -76,6 +76,10 @@ class User(AbstractUser):
     profile_image = models.ImageField(blank=True, null=True,
                                       help_text="Please upload images with a 1:1 aspect ratio and minimum resolution of 500x500.")
     website = models.URLField(blank=True, null=True)
+    github = models.URLField(blank=True, null=True)
+    twitter = models.URLField(blank=True, null=True)
+    scholar = models.URLField(blank=True, null=True)
+    linkedin = models.URLField(blank=True, null=True)
     birthday = models.DateField(blank=True, null=True)
     phone_number = models.CharField(max_length=50, blank=True, null=True, help_text="E.g., '010-0000-0000'")
     secondary_email = models.EmailField(blank=True, null=True)
