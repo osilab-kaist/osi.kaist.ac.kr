@@ -220,7 +220,7 @@ class AdminAwardForm(forms.ModelForm):
 class AdminPhotoForm(forms.ModelForm):
     class Meta:
         model = Photo
-        fields = ["image", "description", "taken_date", "public"]
+        fields = ["image", "description", "taken_date", "starred", "public"]
         widgets = {
             "taken_date": forms.TextInput(attrs={
                 "placeholder": "YYYY-MM-DD",

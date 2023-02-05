@@ -298,6 +298,8 @@ class Photo(models.Model):
     description = models.TextField(max_length=200)
     public = models.BooleanField(default=False)
 
+    starred = models.BooleanField(default=False)
+
     def __str__(self):
         return self.description
 
