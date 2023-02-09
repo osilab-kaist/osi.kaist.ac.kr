@@ -1,0 +1,42 @@
+{% load alter_email %}
+
+<div class="member col-6 col-lg-4 col-xl-3">
+  <img class="member-image" src="{{ member.profile_image_url }}" alt="...">
+  <div class="member-info">
+    <div class="member-name">{{ member.name }}</div>
+    <div class="mb-2">
+      <div class="member-period">
+        {{ member.display_period }}
+      </div>
+      {% if member.is_alumni and member.current_position %}
+        <div class="member-position text-break">
+          {{ member.current_position }}
+        </div>
+      {% endif %}
+      <div class="member-topics">
+        {% for topic in member.display_research_topics %}
+          <span class="member-topic">
+          {{ topic }}
+        </span>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="member-email text-break">
+      {{ member.email|alter_email }}
+    </div>
+    <div class="member-links">
+      {% if member.website %}
+        [<a class="member-link" href="{{ member.website }}">website</a>]
+      {% endif %}
+      {% if member.github %}
+        [<a class="member-link" href="{{ member.github }}">github</a>]
+      {% endif %}
+      {% if member.scholar %}
+        [<a class="member-link" href="{{ member.scholar }}">scholar</a>]
+      {% endif %}
+      {% if member.twitter %}
+        [<a class="member-link" href="{{ member.twitter }}">twitter</a>]
+      {% endif %}
+    </div>
+  </div>
+</div>

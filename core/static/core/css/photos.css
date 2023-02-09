@@ -1,3 +1,8 @@
+.photos {
+  background: #282828;
+  color: white;
+}
+
 .container-flex {
   margin: 0 0.75rem;
 }
@@ -6,48 +11,73 @@
   max-width: none !important;
 }
 
-.photo-year {
-  font-size: 2rem;
+.photos h1 {
+  font-size: 3rem;
   font-weight: 900;
-  color: #888;
+  color: white;
+  margin-bottom: 0.5rem;
+  text-align: end;
+  text-transform: none;
 }
 
-@media (min-width: 768px) {
-  .photo-year {
-    font-size: 2.5rem;
-  }
+.photos h1 a {
+  color: white;
+}
+
+.photo-year {
+  font-size: 2.5rem;
+  font-weight: 900;
+  line-height: 1.5;
+  color: #ff4f77;
+}
+
+.photo-year-border {
+  flex-grow: 1;
+  margin-right: 1rem;
+  border-top: 1px #ff4f77 solid;
 }
 
 .photo {
-  margin-bottom: 1rem;
+  /*margin-bottom: 0.5rem;*/
+  padding: 0.25rem;
+  width: 50%;
 }
 
-.photo .photo-image {
+.photo.starred {
   width: 100%;
-  background: #222;
-  /*max-height: 30rem;*/
-  object-fit: cover;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 48px rgba(0, 0, 0, 0.1), 0 2px 16px rgba(0, 0, 0, 0.15);
-  margin-bottom: 0.5rem;
-}
-
-.photo .photo-image:hover {
-  object-fit: contain;
 }
 
 @media (min-width: 768px) {
-  .photo .photo-image {
-    border-radius: 1rem;
+  .photo {
+    width: 33.33%;
+  }
+
+  .photo.starred {
+    width: 66.67%
   }
 }
 
-@media (min-width: 1200px) {
-  .photo .photo-image {
-    border-radius: 1.5rem;
+@media (min-width: 1024px) {
+  .photo {
+    width: 25%;
+  }
+
+  .photo.starred {
+    width: 50%
   }
 }
 
+.photo img {
+  background: black;
+  width: 100%;
+  max-height: 640px;
+  object-fit: contain;
+  /*margin-bottom: 0.5rem;*/
+}
+
+.photo.private img {
+  border: #888 6px solid;
+}
 
 .photo .photo-description {
   font-size: 0.75rem;

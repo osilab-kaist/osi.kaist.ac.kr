@@ -8,19 +8,17 @@
 {% endblock %}
 
 {% block body %}
-  <div class="container mb-5">
+  <div class="container content p">
     <div class="row justify-content-center">
-      <div class="col-12 col-md-10 mb-5">
-        {% if request.user.has_member_permissions %}
-          <div class="d-flex">
-            <a class="btn btn-secondary ms-auto mb-3" href="{% url 'publication_create' %}">
-              <i class="fas fa-pen-to-square"></i>
-              Add Publication
+      <div class="col-12 col-md-12 mb-5">
+        <h1 class="main-header mb-3">
+          Publications
+          {% if request.user.has_member_permissions %}
+            <a class="main-header-button" href="{% url 'publication_create' %}">
+              <i class="fas fa-circle-plus ms-2"></i>
             </a>
-          </div>
-        {% endif %}
-
-        <h1>Publications</h1>
+          {% endif %}
+        </h1>
         <div class="mb-5">
           <a class="btn btn-filter me-1 mb-2" id="filter-type-toggle" data-bs-toggle="offcanvas"
              href="#offcanvas-filter-type" role="button">
@@ -98,26 +96,37 @@
         </div>
 
         {% if request.user.has_member_permissions and unpublished_publications %}
-          <h2 class="mb-0">Pending Publications</h2>
-          <p>Only visible to graduate members.</p>
-          <div class="mb-5">
+          <div class="section">
+            <div class="section-header">
+              Unlisted
+              <div class="section-header-border"></div>
+            </div>
             {% for publication in unpublished_publications %}
               {% include "core/components/publication.html" %}
             {% endfor %}
           </div>
         {% endif %}
 
-        <h2>International</h2>
         <div class="mb-5">
-          {% for publication in publications %}
-            {% include "core/components/publication.html" %}
+          {% for year in publications %}
+            <div class="section">
+              <div class="section-header" data-year="{{ year.year }}">
+                {{ year.year }}
+                <div class="section-header-border"></div>
+              </div>
+              {% for publication in year.publications %}
+                {% include "core/components/publication.html" %}
+              {% endfor %}
+            </div>
           {% endfor %}
         </div>
 
         {% if request.user.has_member_permissions %}
-          <h2 class="mb-0">Domestic</h2>
-          <p>Only visible to graduate members.</p>
-          <div class="mb-5">
+          <div class="section">
+            <div class="section-header">
+              Domestic
+              <div class="section-header-border"></div>
+            </div>
             {% for publication in domestic_publications %}
               {% include "core/components/publication.html" %}
             {% endfor %}

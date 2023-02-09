@@ -1,0 +1,31 @@
+.post {
+  margin-bottom: 1.5rem;
+}
+
+.post .post-header {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #444;
+}
+
+.post .post-header .post-date {
+  color: #f03861;
+}
+
+.post .post-body {
+  font-size: 0.875rem;
+  margin-bottom: 0;
+  color: #444;
+}
+
+@media (min-width: 768px) {
+  .post .post-header {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .post .post-body {
+    font-size: 0.9375rem;
+  }
+}

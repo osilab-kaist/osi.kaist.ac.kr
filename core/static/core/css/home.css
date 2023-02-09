@@ -1,71 +1,69 @@
-.main {
-  margin-top: 6rem;
-  margin-bottom: 2rem;
+.intro .intro-welcome {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 1.5rem;
 }
 
-@media (max-width: 768px) {
-  .main-header {
-    margin-left: 1rem;
-  }
+.intro .intro-header {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #666;
 }
 
-.intro {
-  margin-top: 2rem;
-}
-
-.intro-paragraph {
-  font-size: 1rem;
+.intro .intro-paragraph {
+  font-size: 0.9375rem;
   font-weight: 400;
-  margin-bottom: 1rem;
-  line-height: 2;
+  margin-bottom: 1.5rem;
   color: #666;
   text-shadow: 0 0 4px transparent;
 }
 
 @media (min-width: 768px) {
-  .intro-paragraph {
-    font-size: 1.125rem;
-    margin-bottom: 1.5rem;
+  .intro .intro-welcome {
+    font-size: 2.25rem;
+    margin-bottom: 3rem;
   }
-}
 
-@media (min-height: 1024px) {
-  .intro {
-    margin-top: 6rem;
-  }
-}
-
-@media (min-width: 768px) and (min-height: 1024px) {
-  .intro-paragraph {
+  .intro .intro-header {
     font-size: 1.375rem;
   }
-}
 
-.intro-paragraph:nth-of-type(1) {
-  -webkit-animation: blackblur 2s 0.25s backwards;
-}
-
-.intro-paragraph:nth-of-type(2) {
-  -webkit-animation: blackblur 2s 0.4s backwards;
-}
-
-.intro-paragraph:nth-of-type(3) {
-  -webkit-animation: blackblur 2s 0.55s backwards;
-}
-
-@-webkit-keyframes blackblur {
-  0% {
-    text-shadow: 0 0 32px transparent;
-    color: transparent;
-    transform: scale(1.06);
+  .intro .intro-paragraph {
+    font-size: 1.125rem;
+    margin-bottom: 3rem;
   }
-  50% {
-    text-shadow: 0 0 4px #666;
-    color: transparent;
-  }
-  100% {
-    text-shadow: 0 0 4px transparent;
-    color: #666;
-    transform: scale(1);
-  }
+}
+
+.intro-photo {
+}
+
+.intro .latest-news {
+  margin-top: 6rem;
+  border-top: 1px #ccc solid;
+  padding-top: 3rem;
+}
+
+.intro .latest-news .header-wrapper {
+  margin-bottom: 2rem;
+  line-height: 1;
+}
+
+.intro .latest-news .header {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: #444;
+  margin-bottom: 0;
+}
+
+.intro .latest-news .see-more {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0;
+  color: #666;
+}
+
+.intro .latest-news .see-more:active,
+.intro .latest-news .see-more:hover {
+  color: #222;
 }

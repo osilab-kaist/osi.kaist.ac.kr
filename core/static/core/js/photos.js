@@ -1,13 +1,11 @@
-$(function () {
-  $(".photos").magnificPopup({
-    delegate: "a.photo-image-link", // child items selector, by clicking on it popup will open
-    type: "image",
-  });
+const $grid = $('.grid').packery({
+  itemSelector: '.grid-item',
+  columnWidth: '.grid-sizer',
+  // percentPosition: true,
+  // horizontalOrder: false,
+  // fitWidth: true
+});
 
-  $(".photo-image").css("height", $(".photo-image").width());
-})
-
-$(window).resize(function () {
-  $(".photo-image").css("height", $(".photo-image").width());
-
-})
+setInterval(function() {
+  $('.grid').packery();
+}, 2000, 10);

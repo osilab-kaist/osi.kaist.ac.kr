@@ -1,12 +1,15 @@
 from django.contrib import admin
+from django.db.models.functions import Lower
 
 # Register your models here.
-from core.models import User, Publication, Photo, Project, InvitationCode, Award, PublicationTag, AdminToken, GPUStatus
+from core.models import User, Publication, Photo, Project, InvitationCode, Award, PublicationTag, AdminToken, GPUStatus, \
+    Post, PasswordResetToken
 
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     list_display = ("__str__", "first_name", "last_name", "email", "position", "position_start_date", "id")
+    ordering = [Lower("last_name")]
 
 
 @admin.register(PublicationTag)
@@ -47,11 +50,23 @@ class AwardAdmin(admin.ModelAdmin):
     actions = [make_public]
 
 
+@admin.register(Post)
+class PostAdmin(admin.ModelAdmin):
+    list_display = ("title", "published_date", "created_date")
+
+    actions = [make_public]
+
+
 @admin.register(Photo)
 class PhotoAdmin(admin.ModelAdmin):
     list_display = ("__str__", "created_by", "created_date", "image")
 
     actions = [make_public]
+
+
+@admin.register(PasswordResetToken)
+class PasswordResetTokenAdmin(admin.ModelAdmin):
+    list_display = ("user", "token")
 
 
 @admin.register(InvitationCode)

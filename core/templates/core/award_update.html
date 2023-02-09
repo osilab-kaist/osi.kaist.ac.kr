@@ -7,18 +7,18 @@
 {% endblock %}
 
 {% block body %}
-  <div class="container mb-5">
+  <div class="container content">
     <div class="row justify-content-center">
       <div class="col-12 col-md-8 col-xl-6">
         <h1>Award</h1>
         {% if not object.public  and not form.public %}
-          <div class="alert alert-warning">
+          <div class="alert">
             <i class="fas fa-exclamation-circle me-1"></i>
             This content has not been confirmed and published to the website.
             Contact a website administrator for publishing.
           </div>
         {% endif %}
-        <div class="alert alert-warning">
+        <div class="alert">
           <i class="fas fa-exclamation-circle me-1"></i>
           Contact a website administrator to delete this content.
         </div>

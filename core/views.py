@@ -1,19 +1,24 @@
 from collections import defaultdict
+from datetime import timedelta, datetime
 
 import django.contrib.auth.views
-from django.contrib.auth import login, authenticate
+from django.conf import settings
+from django.contrib.auth import login, authenticate, REDIRECT_FIELD_NAME
+from django.contrib.auth.views import SuccessURLAllowedHostsMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseRedirect
+from django.shortcuts import resolve_url
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.decorators import method_decorator
+from django.utils.http import is_safe_url
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import TemplateView, FormView, CreateView, UpdateView
+from django.views.generic import TemplateView, FormView, CreateView, UpdateView, ListView, DeleteView
 
 from core.forms import PublicationForm, AdminPublicationForm, AdminProjectForm, ProjectForm, AdminPhotoForm, SignupForm, \
-    ProfileForm, PhotoFormWithoutImage, PhotoForm, AdminAwardForm, AwardForm, GPUStatusForm
-from core.mixins import JsonableResponseMixin
-from core.models import Publication, Project, Photo, User, Award, PublicationTag, GPUStatus
+    ProfileForm, PhotoFormWithoutImage, PhotoForm, AdminAwardForm, AwardForm, GPUStatusForm, PostForm, PasswordResetForm
+from core.mixins import JsonableResponseMixin, MemberRequiredMixin, PhdRequiredMixin, StaffRequiredMixin
+from core.models import Publication, Project, Photo, User, Award, PublicationTag, GPUStatus, Post
 
 
 class HomeView(TemplateView):
@@ -38,6 +43,15 @@ class HomeView(TemplateView):
                 greeting += user.first_name
             greeting += "!"
             context["greeting"] = greeting
+
+        all_posts = Post.objects.order_by("-published_date").all()
+        latest_posts = []
+        for post in all_posts:
+            if len(latest_posts) < 3 or post.published_date > (datetime.now() - timedelta(days=3 * 30)).date():
+                latest_posts.append(post)
+            else:
+                break
+        context["latest_posts"] = latest_posts
         return context
 
 
@@ -46,26 +60,26 @@ class ProfessorView(TemplateView):
 
 
 class StudentsView(TemplateView):
-    template_name = "core/students.html"
+    template_name = "core/people.html"
 
     def get_context_data(self, **kwargs):
         now = timezone.now()
         context = dict()
-        context["postdocs"] = User.objects.filter(position="POS", profile_image__isnull=False).exclude(
-            position_end_date__lt=now).exclude(profile_image='').order_by(
+        context["postdocs"] = User.objects.filter(position="POS").exclude(position_end_date__lt=now).order_by(
             'position_start_date', 'first_name').all()
-        context["phd_students"] = User.objects.filter(position="PHD", profile_image__isnull=False).exclude(
-            position_end_date__lt=now).exclude(profile_image='').order_by(
-            'position_start_date', 'first_name').all()
-        context["integrated_students"] = User.objects.filter(position="INT", profile_image__isnull=False).exclude(
-            position_end_date__lt=now).exclude(profile_image='').order_by(
-            'position_start_date', 'first_name').all()
-        context["ms_students"] = User.objects.filter(position="MAS", profile_image__isnull=False).exclude(
-            position_end_date__lt=now).exclude(profile_image='').order_by(
-            'position_start_date', 'first_name').all()
-        context["visiting_students"] = User.objects.filter(position="VIS", profile_image__isnull=False).exclude(
-            position_end_date__lt=now).exclude(profile_image='').order_by(
-            'position_start_date', 'first_name').all()
+        phd_students = User.objects.filter(position__in=["PHD", "INT"]).exclude(
+            position_end_date__lt=now).order_by('position_start_date', 'first_name').all()
+        phd_students = [
+            (s.position_start_date if s.position == "PHD" else s.position_start_date + timedelta(days=365), s.name, s)
+            for s in phd_students
+        ]
+        phd_students.sort()
+        phd_students = [s[2] for s in phd_students]
+        context["phd_students"] = phd_students
+        context["ms_students"] = User.objects.filter(position="MAS").exclude(position_end_date__lt=now).exclude(
+            profile_image='').order_by('position_start_date', 'first_name').all()
+        context["visiting_students"] = User.objects.filter(position="VIS").exclude(position_end_date__lt=now).exclude(
+            profile_image='').order_by('position_start_date', 'first_name').all()
         context["alumni_students"] = User.objects.filter(position__in=["PHD", "INT", "MAS"],
                                                          position_end_date__lt=timezone.now()).order_by(
             'position_end_date', 'first_name').all()
@@ -82,9 +96,35 @@ class PublicationsView(TemplateView):
             '-published_date', 'authors').prefetch_related("tags").all()
         domestic_publications = Publication.objects.filter(type__in=["KCO", "KJR"]).order_by(
             '-published_date', 'authors').prefetch_related("tags").all()
+        publications = list(publications)
+
+        # Add indices
+        conference_index = 1
+        workshop_index = 1
+        journal_index = 1
+        for p in publications[::-1]:
+            if p.type == "CON":
+                p.index = "C{}".format(conference_index)
+                conference_index += 1
+            elif p.type == "WOR":
+                p.index = "W{}".format(workshop_index)
+                workshop_index += 1
+            elif p.type == "JRN":
+                p.index = "J{}".format(journal_index)
+                journal_index += 1
+
+        # Organize by year
+        publications_by_year = defaultdict(list)
+        for p in publications:
+            p: Publication
+            publications_by_year[p.published_date.year].append(p)
+        publications_by_year = [{
+            "year": year,
+            "publications": publications,
+        } for year, publications in publications_by_year.items()]
 
         context = dict()
-        context["publications"] = publications
+        context["publications"] = publications_by_year
         context["unpublished_publications"] = unpublished_publications
         context["domestic_publications"] = domestic_publications
 
@@ -131,8 +171,7 @@ class PhotosView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = dict()
-        photos = Photo.objects.filter(public=True).order_by('taken_date').all()
-        unpubished_photos = Photo.objects.filter(public=False).all()
+        photos = Photo.objects.order_by("-public", "taken_date").all()
         photos_by_year = defaultdict(list)
         for p in photos:
             photos_by_year[p.taken_date.year].append(p)
@@ -143,14 +182,15 @@ class PhotosView(TemplateView):
                 "photos": photos_by_year[year],
             })
         context["photos"] = photos_by_year_list
-        context["unpublished_photos"] = unpubished_photos
         return context
 
 
-class RequestType:
-    """For code-inspection
-    """
-    user: User
+class NewsView(ListView):
+    template_name = "core/news.html"
+    context_object_name = "posts"
+
+    def get_queryset(self):
+        return Post.objects.order_by("-published_date")
 
 
 class LoginView(django.contrib.auth.views.LoginView):
@@ -192,20 +232,6 @@ class ProfileView(LoginRequiredMixin, UpdateView):
         return self.request.user
 
 
-class PhdRequiredMixin(UserPassesTestMixin):
-    request: RequestType
-
-    def test_func(self):
-        return self.request.user.is_authenticated and self.request.user.has_phd_permissions
-
-
-class MemberRequiredMixin(UserPassesTestMixin):
-    request: RequestType
-
-    def test_func(self):
-        return self.request.user.is_authenticated and self.request.user.has_member_permissions
-
-
 class PublicationCreateView(MemberRequiredMixin, CreateView):
     template_name = "core/publication_create.html"
     object: Publication
@@ -244,6 +270,13 @@ class PublicationUpdateView(MemberRequiredMixin, UpdateView):
         self.object.last_modified_by = self.request.user
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+
+class PublicationDeleteView(StaffRequiredMixin, DeleteView):
+    template_name = "core/publication_delete.html"
+    model = Publication
+    slug_field = "id"
+    success_url = reverse_lazy("publications")
 
 
 class ProjectCreateView(PhdRequiredMixin, CreateView):
@@ -288,6 +321,13 @@ class ProjectUpdateView(PhdRequiredMixin, UpdateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
+class ProjectDeleteView(StaffRequiredMixin, DeleteView):
+    template_name = "core/project_delete.html"
+    model = Project
+    slug_field = "id"
+    success_url = reverse_lazy("projects")
+
+
 class AwardCreateView(MemberRequiredMixin, CreateView):
     template_name = "core/award_create.html"
     model = Award
@@ -328,6 +368,45 @@ class AwardUpdateView(MemberRequiredMixin, UpdateView):
         self.object.last_modified_by = self.request.user
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+
+class PostCreateView(PhdRequiredMixin, CreateView):
+    template_name = "core/post_create.html"
+    model = Post
+    success_url = reverse_lazy("news")
+    form_class = PostForm
+
+    object: Post
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.created_by = self.request.user
+        self.object.last_modified_by = self.request.user
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class PostUpdateView(PhdRequiredMixin, UpdateView):
+    template_name = "core/post_update.html"
+    model = Post
+    slug_field = "id"
+    success_url = reverse_lazy("news")
+    form_class = PostForm
+
+    object: Post
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.last_modified_by = self.request.user
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class PostDeleteView(StaffRequiredMixin, DeleteView):
+    template_name = "core/post_delete.html"
+    model = Post
+    slug_field = "id"
+    success_url = reverse_lazy("news")
 
 
 class PhotoCreateView(MemberRequiredMixin, CreateView):
@@ -372,6 +451,41 @@ class PhotoUpdateView(MemberRequiredMixin, UpdateView):
         self.object = form.save(commit=False)
         self.object.last_modified_by = self.request.user
         self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class PhotoDeleteView(StaffRequiredMixin, DeleteView):
+    template_name = "core/photo_delete.html"
+    model = Photo
+    slug_field = "id"
+    success_url = reverse_lazy("photos")
+
+
+class ResetPasswordView(SuccessURLAllowedHostsMixin, FormView):
+    template_name = "core/reset_password.html"
+    form_class = PasswordResetForm
+    redirect_field_name = REDIRECT_FIELD_NAME
+
+    def get_success_url(self):
+        url = self.get_redirect_url()
+        return url or resolve_url(settings.LOGIN_REDIRECT_URL)
+
+    def get_redirect_url(self):
+        """Return the user-originating redirect URL if it's safe."""
+        redirect_to = self.request.POST.get(
+            self.redirect_field_name,
+            self.request.GET.get(self.redirect_field_name, '')
+        )
+        url_is_safe = is_safe_url(
+            url=redirect_to,
+            allowed_hosts=self.get_success_url_allowed_hosts(),
+            require_https=self.request.is_secure(),
+        )
+        return redirect_to if url_is_safe else ''
+
+    def form_valid(self, form):
+        user = form.save(commit=True)
+        login(self.request, user)
         return HttpResponseRedirect(self.get_success_url())
 
 

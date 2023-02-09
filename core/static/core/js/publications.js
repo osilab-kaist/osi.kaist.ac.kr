@@ -26,6 +26,9 @@ function applySelections() {
     $("#filter-area-toggle").removeClass("active")
   }
 
+  $(".section").each(function () {
+    $(this).show();
+  });
 
   $(".publication").each(function () {
     $(this).show();
@@ -51,6 +54,12 @@ function applySelections() {
           $(this).show();
         }
       }
+    }
+  });
+
+  $(".section").each(function () {
+    if ($(this).find(".publication:visible").length === 0) {
+      $(this).hide();
     }
   });
 }

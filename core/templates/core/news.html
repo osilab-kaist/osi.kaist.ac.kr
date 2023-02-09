@@ -1,0 +1,47 @@
+{% extends 'core/base.html' %}
+
+{% load staticfiles %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'core/css/publications.css' %}">
+  <link rel="stylesheet" href="{% static 'core/css/awards.css' %}">
+  <link rel="stylesheet" href="{% static 'core/css/news.css' %}">
+{% endblock %}
+
+{% block body %}
+  <div class="container content">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-10">
+        <h1 class="main-header">
+          News
+          {% if request.user.has_member_permissions %}
+            <a class="main-header-button" href="{% url 'post_create' %}">
+              <i class="fas fa-circle-plus ms-2"></i>
+            </a>
+          {% endif %}
+        </h1>
+        {% for post in posts %}
+          <div class="post">
+            <a class="post-header d-block"
+               {% if request.user.has_phd_permissions %}href="{% url 'post_update' post.id %}" {% endif %}>
+              <div class="post-date d-inline">
+                [{{ post.published_date|date:"M d, Y" }}]
+              </div>
+              <div class="post-title d-inline">
+                {{ post.title }}
+              </div>
+            </a>
+            {% if post.body %}
+              <div class="post-body">
+                {{ post.body|safe }}
+              </div>
+            {% endif %}
+
+          </div>
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

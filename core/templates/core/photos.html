@@ -8,64 +8,39 @@
 {% endblock %}
 
 {% block body %}
-  <div class="container-flex mb-5">
-    <div class="row justify-content-center">
-      <div class="col-12 col-md-11">
+  <div class="photos py-5">
+    <div class="container">
+      <h1>
         {% if request.user.has_member_permissions %}
-          <div class="d-flex">
-            <a class="btn btn-secondary ms-auto mb-3" href="{% url 'photo_create' %}">
-              <i class="fas fa-pen-to-square"></i>
-              Add Photo
-            </a>
-          </div>
+          <a class="" href="{% url 'photo_create' %}">
+            <i class="fas fa-cloud-arrow-up p-2"></i>
+          </a>
         {% endif %}
-        {% if request.user.has_member_permissions and unpublished_photos %}
-          <h1 class="mb-0">Pending Photos</h1>
-          <p>Only visible to graduate members.</p>
-          <div class="photos row g-2 g-md-3 g-xxl-4 mb-4">
-            {% for photo in unpublished_photos %}
-              <div class="col-6 col-md-4 col-xl-3 col-xxl-2">
-                <div class="photo">
-                  <a class="photo-image-link" href="{{ photo.image.url }}" title="{{ photo.description }}">
-                    <img class="photo-image" src="{{ photo.image.url }}">
-                  </a>
-                  <p class="photo-description">
-                    {{ photo.description }}
-                    {% if request.user.has_member_permissions %}
-                      <a class="ms-2" href="{% url 'photo_update' photo.id %}">
-                        <i class="fas fa-pen-to-square"></i>
-                      </a>
-                    {% endif %}
-                  </p>
-                </div>
-              </div>
-            {% endfor %}
-          </div>
-        {% endif %}
-        <h1>Photos</h1>
-        {% for year in photos %}
+        Photos
+      </h1>
+      {% for year in photos %}
+        <div class="d-flex align-items-center">
+          <div class="photo-year-border"></div>
           <h2 class="photo-year">{{ year.year }}</h2>
-          <div class="photos row g-2 g-md-3 g-xxl-4 mb-4">
-            {% for photo in year.photos %}
-              <div class="col-6 col-md-4 col-xl-3 col-xxl-2">
-                <div class="photo">
-                  <a class="photo-image-link" href="{{ photo.image.url }}" title="{{ photo.description }}">
-                    <img class="photo-image" src="{{ photo.image.url }}">
-                  </a>
-                  <p class="photo-description">
-                    {{ photo.description }}
-                    {% if request.user.has_member_permissions %}
-                      <a class="ms-2" href="{% url 'photo_update' photo.id %}">
-                        <i class="fas fa-pen-to-square"></i>
-                      </a>
-                    {% endif %}
-                  </p>
-                </div>
-              </div>
-            {% endfor %}
-          </div>
-        {% endfor %}
-      </div>
+        </div>
+        <div class="grid" data-packery='{ "itemSelector": ".grid-item" }'>
+          <div class="grid-sizer"></div>
+          {% for photo in year.photos %}
+            <div
+                class="grid-item photo {% if photo.starred %}starred{% endif %} {% if not photo.public %}private{% endif %}">
+              {% if photo.public or request.user.has_member_permissions %}
+                <a href="{% url 'photo_update' photo.id %}">
+                  <img src="{{ photo.image.url }}">
+                </a>
+              {% else %}
+                <a class="photo-image-link" href="{{ photo.image.url }}">
+                  <img src="{{ photo.image.url }}">
+                </a>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
     </div>
   </div>
 {% endblock %}

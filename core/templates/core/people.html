@@ -1,0 +1,66 @@
+{% extends 'core/base.html' %}
+
+{% load staticfiles %}
+{% load alter_email %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'core/css/people.css' %}">
+  <script src="{% static 'core/js/people.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+  <div class="container content people">
+    <div class="row justify-content-center">
+      <h1 class="main-header">People</h1>
+      <div class="col-12">
+        <div class="row mb-4">
+          {% include 'core/components/member_card_professor.html' %}
+        </div>
+        {% if postdocs.exists %}
+          <h1>Postdoc Researchers</h1>
+          <div class="row mb-4">
+            {% for member in postdocs %}
+              {% include 'core/components/member_card.html' %}
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <h1>PhD Students</h1>
+        <div class="row mb-4">
+          {% for member in phd_students %}
+            {% include 'core/components/member_card.html' %}
+          {% endfor %}
+        </div>
+
+        <h1>MS Students</h1>
+        <div class="row mb-4">
+          {% for member in ms_students %}
+            {% include 'core/components/member_card.html' %}
+          {% endfor %}
+        </div>
+
+        <h1>Visiting</h1>
+        <div class="row mb-4">
+          {% for member in visiting_students %}
+            {% include 'core/components/member_card.html' %}
+          {% endfor %}
+        </div>
+
+        <h1>Alumni</h1>
+        <div class="row mb-4">
+          {% for member in alumni_students %}
+            {% include 'core/components/member_card.html' %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+
+
+
+
+
+
+

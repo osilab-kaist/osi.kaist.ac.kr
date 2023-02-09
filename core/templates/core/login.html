@@ -7,19 +7,22 @@
 {% endblock %}
 
 {% block body %}
-  <div class="container mb-5">
+  <div class="container content">
     <div class="row justify-content-center">
       <div class="col-12 col-md-8 col-xl-6">
         <h1>Login</h1>
-        <div class="alert alert-warning">
+        <div class="alert">
           <i class="fas fa-exclamation-circle me-1"></i>
           You must be a member of this lab to proceed.
         </div>
         <form method="post" enctype="multipart/form-data">
           {% csrf_token %}
           {% bootstrap_form form %}
-          <button class="btn btn-secondary" type="submit">Login</button>
-          <a class="btn" href="{% url 'signup' %}">Sign Up</a>
+          <div class="d-flex">
+            <a class="btn px-0 me-3" href="{% url 'signup' %}">Sign Up</a>
+            <a class="btn px-0" href="{% url 'reset_password' %}">Reset Password</a>
+            <button class="btn btn-secondary ms-auto" type="submit">Login</button>
+          </div>
         </form>
       </div>
     </div>

@@ -1,9 +1,12 @@
 import random
 import string
+from datetime import datetime
 
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.templatetags.static import static
+from django.utils.timezone import now
 
 
 class CustomUserManager(BaseUserManager):
@@ -84,7 +87,10 @@ class User(AbstractUser):
     phone_number = models.CharField(max_length=50, blank=True, null=True, help_text="E.g., '010-0000-0000'")
     secondary_email = models.EmailField(blank=True, null=True)
     research_topics = models.TextField(max_length=500, blank=True, null=True,
-                                       help_text="Please use title-case, i.e., start words in uppercase. E.g., 'NAS, Transfer Learning, Theory of AI'.")
+                                       help_text="Examples: CV, NLP, Theory, Data Centric, FL, RL, GNN, Few-Shot, LLM, AutoML, SSL.")
+
+    current_position = models.CharField(max_length=100, blank=True, null=True,
+                                        help_text="Examples: 'Research Scientist, Google', 'Assistant Professor, Seoul National University'")
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
@@ -114,7 +120,9 @@ class User(AbstractUser):
 
     @property
     def graduation_semester(self):
-        if not self.position_end_date:
+        if self.position_end_date == POSITION_VISITING:
+            return None
+        if not self.position_end_date or datetime.now().date() < self.position_end_date:
             return None
         if 1 <= self.position_end_date.month <= 5:
             return "Spring {}".format(self.position_end_date.year)
@@ -129,6 +137,46 @@ class User(AbstractUser):
             return "Spring {}".format(self.position_start_date.year)
         else:
             return "Fall {}".format(self.position_start_date.year)
+
+    @property
+    def is_alumni(self):
+        return bool(self.graduation_semester)
+
+    @property
+    def display_period(self):
+        if self.position == POSITION_VISITING:
+            if self.position_end_date and self.position_start_date.year < self.position_end_date.year:
+                return "Visiting·{} - {}".format(
+                    self.position_start_date.year,
+                    self.position_end_date.year,
+                )
+            else:
+                return "Visiting·{}".format(
+                    self.position_start_date.year,
+                )
+        else:
+            if self.entry_semester:
+                if self.graduation_semester:
+                    return "{}·{}".format(self.course_shorthand, self.graduation_semester)
+                else:
+                    return "{}·{}".format(self.course_shorthand, self.entry_semester)
+
+    @property
+    def display_research_topics(self):
+        if self.research_topics:
+            topics = self.research_topics.split(", ")
+            if len(topics) > 3:
+                topics = topics[:3] + ["..."]
+            return topics
+        else:
+            return []
+
+    @property
+    def profile_image_url(self):
+        if self.profile_image:
+            return self.profile_image.url
+        else:
+            return static("core/images/default_profile.png")
 
     @property
     def name(self):
@@ -160,6 +208,10 @@ def generate_admin_token(n=40, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(n))
 
 
+def generate_password_reset_token(n=40, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.choice(chars) for _ in range(n))
+
+
 class InvitationCode(models.Model):
     code = models.CharField(max_length=20, default=generate_invitation_code)
     position = models.CharField(max_length=3, choices=position_choices)
@@ -181,6 +233,17 @@ class PublicationTag(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class PasswordResetToken(models.Model):
+    created_date = models.DateTimeField(auto_now_add=True, db_index=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+    user = models.ForeignKey(User, models.CASCADE)
+    token = models.CharField(max_length=40, default=generate_password_reset_token)
+
+    def __str__(self):
+        return self.user.name
 
 
 class Publication(models.Model):
@@ -219,6 +282,18 @@ class Publication(models.Model):
     video_link = models.URLField(null=True, blank=True)
 
     public = models.BooleanField(default=False)
+
+    @property
+    def display_author_list(self):
+        authors = self.authors.replace("and", "").split(", ")
+        authors = [
+            {
+                "name": author.replace("*", ""),
+                "first": author.find("*") != -1,
+            } for author in authors
+        ]
+        authors[0]["first"] = True
+        return authors
 
     def __str__(self):
         return '({}) {} et al., {}'.format(self.published_date.year, self.authors.split(",")[0], self.title)
@@ -302,6 +377,20 @@ class Photo(models.Model):
 
     def __str__(self):
         return self.description
+
+
+class Post(models.Model):
+    """
+    News post
+    """
+    created_date = models.DateTimeField(auto_now_add=True, db_index=True)
+    modified_date = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(User, models.SET_NULL, null=True, related_name="news_created")
+    last_modified_by = models.ForeignKey(User, models.SET_NULL, null=True)
+
+    published_date = models.DateField(default=now)
+    title = models.TextField()
+    body = models.TextField(help_text="This will be displayed on the website as raw HTML.", null=True, blank=True)
 
 
 class AdminToken(models.Model):

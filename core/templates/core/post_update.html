@@ -4,20 +4,14 @@
 {% load bootstrap5 %}
 
 {% block head %}
+  <link rel="stylesheet" href="{% static 'core/css/news.css' %}">
 {% endblock %}
 
 {% block body %}
   <div class="container content">
     <div class="row justify-content-center">
       <div class="col-12 col-md-8 col-xl-6">
-        <h1>Publication</h1>
-        {% if not object.public  and not form.public %}
-          <div class="alert">
-            <i class="fas fa-exclamation-circle me-1"></i>
-            This content has not been confirmed and published to the website.
-            Contact a website manager for publishing.
-          </div>
-        {% endif %}
+        <h1>Post</h1>
         {% if not request.user.is_staff %}
           <div class="alert">
             <i class="fas fa-exclamation-circle me-1"></i>
@@ -31,9 +25,9 @@
           </div>
           <div class="d-flex">
             {% if request.user.is_staff %}
-              <a class="btn btn-danger" href="{% url 'publication_delete' object.id %}">Delete</a>
+              <a class="btn btn-danger" href="{% url 'post_delete' object.id %}">Delete</a>
             {% endif %}
-            <button class="btn btn-secondary ms-auto" type="submit">Update Publication</button>
+            <button class="btn btn-secondary ms-auto" type="submit">Update Post</button>
           </div>
         </form>
       </div>

@@ -8,5 +8,5 @@ from django.conf import settings
 urlpatterns = [
     url('', include('core.urls')),
     url(r'^osi-management/', admin.site.urls),
-    re_path(r'^media/(?P<path>.*)$', serve, {'document_root':settings.MEDIA_ROOT}),
+    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 ]

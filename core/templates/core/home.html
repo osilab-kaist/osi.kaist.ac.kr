@@ -4,23 +4,51 @@
 
 {% block head %}
   <link rel="stylesheet" href="{% static 'core/css/home.css' %}">
+  <link rel="stylesheet" href="{% static 'core/css/news.css' %}">
 {% endblock %}
 
 {% block body %}
-  <div class="container intro">
+  <div class="container intro content">
     <div class="row justify-content-center">
-      <div class="col-12 col-md-8 px-5 px-md-0">
+      <div class="col-12 col-md-10 col-lg-8">
+        <div class="intro-welcome">
+          Welcome
+        </div>
+        {#        <div class="intro-header">Optimization and Statistical Inference Lab</div>#}
+        <div class="intro-header">Optimization and Statistical Inference Lab</div>
         <p class="intro-paragraph">
-          {% if greeting %}
-            {{ greeting }} Welcome back to the Optimization and Statistical Inference Lab of KAIST AI.
-          {% else %}
-            Welcome to the Optimization and Statistical Inference Lab of KAIST AI.
-          {% endif %}
-        </p>
-        <p class="intro-paragraph">
-          Our members tackle a wide range of problems, from theoretical analysis of traditional machine learning, to
+          Welcome to the Optimization and Statistical Inference Lab at KAIST AI.
+          We tackle a wide range of problems, from theoretical analysis of traditional machine learning, to
           the latest research topics in deep learning. See publications for details.
         </p>
+      </div>
+      <div class="col-12 col-md-10">
+        <img class="intro-photo w-100 mb-5" src="{% static 'core/images/photo.jpg' %}" alt="Group photo Spring 2022">
+      </div>
+      <div class="col-12 col-md-10 col-xl-8 latest-news">
+        <div class="d-flex align-items-end header-wrapper">
+          <div class="header">Latest News</div>
+          <a href="{% url 'news' %}" class="see-more ms-auto">See More</a>
+        </div>
+        {% for post in latest_posts %}
+          <div class="post">
+            <a class="post-header d-block"
+               {% if request.user.has_phd_permissions %}href="{% url 'post_update' post.id %}" {% endif %}>
+              <div class="post-date d-inline">
+                [{{ post.published_date|date:"M d, Y" }}]
+              </div>
+              <div class="post-title d-inline">
+                {{ post.title }}
+              </div>
+            </a>
+            {% if post.body %}
+              <div class="post-body">
+                {{ post.body|safe }}
+              </div>
+            {% endif %}
+
+          </div>
+        {% endfor %}
       </div>
     </div>
   </div>

@@ -2,32 +2,46 @@
      data-type="{{ publication.type }}"
      data-year="{{ publication.published_date.year }}"
      data-area-ids="{% for tag in publication.tags.all %}{{ tag.id }} {% endfor %}">
-  <div class="publication-tag">
-    {{ publication.type_tag }}
-  </div>
-  <div class="publication-title">
-    {% if request.user.has_member_permissions %}
-      <a href="{% url 'publication_update' publication.id %}">
-        {{ publication.title }}
-      </a>
-    {% else %}
-      {{ publication.title }}
+  <div class="d-flex">
+    {% if publication.index %}
+      <div class="publication-index">
+        [{{ publication.index }}]
+      </div>
     {% endif %}
-  </div>
-  <div>
-    <span class="publication-venue">{{ publication.venue }}</span>
+    <div>
+      <div class="publication-title">
+        {% if request.user.has_member_permissions %}
+          <a href="{% url 'publication_update' publication.id %}">
+        {% endif %}
+        {{ publication.title }}
+        {% if request.user.has_member_permissions %}
+          </a>
+        {% endif %}
+      </div>
+      <div class="publication-authors">
+        {% for author in publication.display_author_list %}
+          <div class="publication-author {% if author.first %}first{% endif %}">
+            <span class="name">{{ author.name }}</span>{% if not forloop.last %}<span class="comma">,</span>{% endif %}
+          </div>
+        {% endfor %}
+      </div>
+      <div class="publication-venue">
+        {{ publication.venue }}
+      </div>
+      <div>
     <span class="publication-links">
       {% if publication.pdf_link %}
-        [<a href="{{ publication.pdf_link }}">PDF</a>]
+        [<a href="{{ publication.pdf_link }}">paper</a>]
       {% endif %}
       {% if publication.video_link %}
-        [<a href="{{ publication.video_link }}">Video</a>]
+        [<a href="{{ publication.video_link }}">video</a>]
       {% endif %}
       {% if publication.code_link %}
-        [<a href="{{ publication.code_link }}">Code</a>]
+        [<a href="{{ publication.code_link }}">code</a>]
       {% endif %}
     </span>
+      </div>
+    </div>
   </div>
-  <div class="publication-author">{{ publication.authors }}</div>
 </div>
 

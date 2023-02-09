@@ -1,0 +1,50 @@
+body {
+  padding-top: 93px;
+}
+@media (min-width: 768px) {
+  .navbar .container {
+    max-width: none;
+  }
+}
+
+.navbar.fixed-top {
+  border-bottom: 1px solid #ddd;
+}
+
+.navbar-logo-kaist {
+  margin-top: 0.25rem;
+  height: 1.25rem;
+}
+
+.navbar-logo-osi {
+  height: 1.25rem;
+}
+
+.navbar-logo {
+  color: black;
+  font-size: 1.75rem;
+  font-weight: 900;
+  margin: 0;
+}
+
+.navbar-logo .dot {
+  color: #f03861;
+}
+
+.navbar-toggler {
+  color: #444;
+  border: none;
+  font-size: 1rem;
+}
+
+.nav-item {
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.75rem 1rem;
+  color: #666;
+  /*text-transform: uppercase;*/
+}
+
+.nav-item:hover, .nav-item:active {
+  color: #f03861;
+}

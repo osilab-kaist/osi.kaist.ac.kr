@@ -1,17 +1,26 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import password_validation
+from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
 from django.core.exceptions import ValidationError
+from django.db import transaction
+from django_quill.forms import QuillFormField
+from django_quill.widgets import QuillWidget
 
-from core.models import Publication, Project, Photo, User, InvitationCode, Award, GPUStatus, AdminToken
+from core.models import Publication, Project, Photo, User, InvitationCode, Award, GPUStatus, AdminToken, Post, \
+    PasswordResetToken
 
 
 class SignupForm(UserCreationForm):
     invitation_code = forms.CharField(max_length=20)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["profile_image"].required = True
+
     class Meta:
         model = User
-        fields = ["first_name", "last_name", "email", "position_start_date", "department", "visiting_title",
-                  "website", "birthday", "phone_number", "secondary_email", "research_topics"]
+        fields = ["first_name", "last_name", "email", "profile_image", "position_start_date", "website", "birthday",
+                  "phone_number", "secondary_email", "research_topics"]
         widgets = {
             "first_name": forms.TextInput(attrs={
                 "placeholder": "Yoshua",
@@ -54,8 +63,8 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ["position", "profile_image", "first_name", "last_name", "email", "position_start_date",
-                  "position_end_date", "degree", "department", "visiting_title", "website", "github", "scholar",
-                  "twitter", "birthday", "phone_number", "secondary_email", "research_topics"]
+                  "position_end_date", "website", "github", "scholar", "twitter", "birthday", "phone_number",
+                  "secondary_email", "research_topics", "current_position"]
         widgets = {
             "first_name": forms.TextInput(attrs={
                 "placeholder": "Yoshua",
@@ -136,6 +145,15 @@ class PhotoForm(forms.ModelForm):
         }
 
 
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ["published_date", "title", "body"]
+        widgets = {
+            "title": forms.TextInput(),
+        }
+
+
 class PhotoFormWithoutImage(forms.ModelForm):
     class Meta:
         model = Photo
@@ -145,6 +163,55 @@ class PhotoFormWithoutImage(forms.ModelForm):
                 "placeholder": "YYYY-MM-DD",
             }),
         }
+
+
+class PasswordResetForm(forms.Form):
+    error_messages = {
+        'invalid_token': "Incorrect email or token",
+        'invalid_email': "Invalid email",
+    }
+    email = forms.EmailField()
+    password_reset_token = forms.CharField(label="Password reset token", max_length=40)
+    new_password = forms.CharField(
+        label="New password",
+        widget=forms.PasswordInput,
+        strip=False,
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+
+    def clean_new_password(self):
+        password = self.cleaned_data.get('new_password')
+        password_validation.validate_password(password)
+        return password
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if not User.objects.filter(email=email).exists():
+            raise ValidationError(self.error_messages["invalid_email"], code="invalid_email")
+        return email
+
+    def clean(self):
+        cleaned_data = super().clean()
+        new_password = cleaned_data.get("new_password")
+        token = cleaned_data.get("password_reset_token")
+        email = cleaned_data.get("email")
+        if email and new_password:
+            token_object = PasswordResetToken.objects.filter(user__email=email, token=token).first()
+            if token_object is None:
+                raise ValidationError(self.error_messages["invalid_token"], code="invalid_token")
+            self.token = token_object
+        return cleaned_data
+
+    def save(self, commit=True):
+        password = self.cleaned_data["new_password"]
+        user = self.token.user
+        token = self.token
+        with transaction.atomic():
+            user.set_password(password)
+            token.delete()
+            if commit:
+                token.user.save()
+        return user
 
 
 class GPUStatusForm(forms.ModelForm):
