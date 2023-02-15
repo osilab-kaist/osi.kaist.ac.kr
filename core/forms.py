@@ -3,8 +3,6 @@ from django.contrib.auth import password_validation
 from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
 from django.core.exceptions import ValidationError
 from django.db import transaction
-from django_quill.forms import QuillFormField
-from django_quill.widgets import QuillWidget
 
 from core.models import Publication, Project, Photo, User, InvitationCode, Award, GPUStatus, AdminToken, Post, \
     PasswordResetToken
