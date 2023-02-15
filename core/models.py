@@ -285,7 +285,8 @@ class Publication(models.Model):
 
     @property
     def display_author_list(self):
-        authors = self.authors.replace("and", "").split(", ")
+        authors = self.authors.replace(" and ", ",").split(",")
+        authors = list(filter(lambda a: a.strip(), authors))
         authors = [
             {
                 "name": author.replace("*", ""),

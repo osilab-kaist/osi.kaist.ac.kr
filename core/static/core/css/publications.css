@@ -64,7 +64,7 @@
 
 .publication .publication-author .comma {
   font-size: 0.75rem;
-  margin-left: 0.125rem;
+  /*margin-left: 0.125rem;*/
 }
 
 .publication .publication-venue {
