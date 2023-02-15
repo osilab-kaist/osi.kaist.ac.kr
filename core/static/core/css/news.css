@@ -16,7 +16,18 @@
 .post .post-body {
   font-size: 0.875rem;
   margin-bottom: 0;
-  color: #444;
+  color: #666;
+}
+
+.post .post-body p {
+  margin-bottom: 0.5rem;
+}
+
+.post .post-body a:link,
+.post .post-body a:visited {
+  color: #ab0030;
+  /*color: #f03861;*/
+  /*text-decoration: underline;*/
 }
 
 @media (min-width: 768px) {

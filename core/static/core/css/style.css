@@ -89,3 +89,6 @@ h2 {
   border-radius: 0;
 }
 
+.popover-body {
+  display: none;
+}

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'bootstrap5',
+    'django_summernote',
     'core',
 ]
 
@@ -145,3 +146,36 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
 MEDIA_URL = '/media/'
+
+SUMMERNOTE_THEME = 'bs4'
+
+SUMMERNOTE_CONFIG = {
+    'summernote': {
+        # Change editor size
+        'width': '100%',
+        'height': '480',
+
+        # Toolbar customization
+        # https://summernote.org/deep-dive/#custom-toolbar-popover
+        'toolbar': [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            # ['fontname', ['fontname']],
+            # ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            # ['insert', ['link', 'picture', 'video']],
+            ['insert', ['link']],
+            # ['view', ['fullscreen', 'codeview', 'help']],
+            ['view', ['codeview', 'help']],
+        ],
+
+        'popover': {
+        },
+
+        # Or, explicitly set language/locale for editor
+        'lang': 'ko-KR',
+    },
+
+    # 'disable_attachment': True
+}

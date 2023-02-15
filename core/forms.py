@@ -3,6 +3,7 @@ from django.contrib.auth import password_validation
 from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
 from django.core.exceptions import ValidationError
 from django.db import transaction
+from django_summernote.widgets import SummernoteInplaceWidget, SummernoteWidget
 
 from core.models import Publication, Project, Photo, User, InvitationCode, Award, GPUStatus, AdminToken, Post, \
     PasswordResetToken
@@ -149,6 +150,7 @@ class PostForm(forms.ModelForm):
         fields = ["published_date", "title", "body"]
         widgets = {
             "title": forms.TextInput(),
+            "body": SummernoteWidget(),
         }
 
 
