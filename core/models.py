@@ -275,7 +275,7 @@ class Publication(models.Model):
     ]
     type = models.CharField(max_length=3, choices=type_choices)
 
-    tags = models.ManyToManyField(PublicationTag, "Tags", null=True, blank=True)
+    tags = models.ManyToManyField(PublicationTag, "Tags", blank=True)
 
     pdf_link = models.URLField(null=True, blank=True)
     code_link = models.URLField(null=True, blank=True)
