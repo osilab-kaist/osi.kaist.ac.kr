@@ -1,0 +1,73 @@
+{% extends 'core/base.html' %}
+
+{% load staticfiles %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'core/css/apply.css' %}">
+{% endblock %}
+
+{% block body %}
+  <div class="container content p">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8 mb-5">
+        <h1 class="main-header mb-5">
+          Apply
+        </h1>
+        <div class="mb-5">
+          <p class="mb-3">For prospective students and postdocs,</p>
+          <p>
+            We’re constantly seeking highly motivated and talented students and postdocs to join our team. If you’re
+            interested, please check our available positions in the following subject areas:
+          </p>
+          <ul>
+            <li>Reinforcement Learning Theory: This research area is purely theoretical and investigates the
+              exploration and exploitation tradeoff for active learning scenarios. Applicants with strong math
+              backgrounds or a willingness to learn are preferred. Please refer to our recent works:
+              [<a href="https://arxiv.org/abs/2208.08480">paper1a</a>]
+              [<a href="https://arxiv.org/abs/1703.01347">paper2a</a>]
+              [<a href="https://proceedings.mlr.press/v162/kim22j.html">paper3a</a>].
+            </li>
+            <li>
+              Compressing Large Language Models: We’re working on compressing recent large language
+              models (LLMs) to reduce computation and memory space. We’re seeking applicants with excellent
+              communication skills and experience in coding. Please refer to our recent works:
+              [<a href="https://arxiv.org/abs/2302.01530">paper1b</a>]
+              [<a href="https://arxiv.org/abs/2212.10071">paper2b</a>].
+            </li>
+            <li>
+              Weather Forecasting AI: We believe AI can assist in fighting climate change, and weather forecasting AI
+              is a great place to start. We’re seeking applicants with excellent communication skills and experience in
+              coding. Please refer to our recent works:
+              [<a href="https://arxiv.org/abs/2206.15241">paper1c</a>]
+              [<a href="https://arxiv.org/abs/2212.02059">paper2c</a>].
+            </li>
+          </ul>
+        </div>
+        <div class="mb-5">
+          <h2>Open Positions</h2>
+          <ul>
+            <li>
+              MS and PhD students: We have open positions for Spring/Fall 2024, but not for Fall 2023.
+            </li>
+            <li>Postdocs: We always have open positions.</li>
+            <li>
+              Interns: Our next round of applications is due on Feb 24, 2023, with decision notifications on Mar 1,
+              2023. Next round will be May 26, 2023.
+            </li>
+          </ul>
+        </div>
+        <div class="mb-5">
+          <p>
+            To apply, please send your CV and cover letter to Prof. Se-Young Yun at the email below. We welcome applications from all
+            backgrounds and identities. Thank you for your interest in joining our team, and we look forward to hearing
+            from you!
+          </p>
+          <p>
+            <i class="fas fa-envelope me-2"></i>yunseyoung[at]kaist.ac.kr
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

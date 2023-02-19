@@ -166,6 +166,10 @@ class AwardsView(TemplateView):
         return context
 
 
+class ApplyView(TemplateView):
+    template_name = "core/apply.html"
+
+
 class PhotosView(TemplateView):
     template_name = "core/photos.html"
 

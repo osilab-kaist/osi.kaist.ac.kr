@@ -1,6 +1,7 @@
 body {
   padding-top: 93px;
 }
+
 @media (min-width: 768px) {
   .navbar .container {
     max-width: none;
@@ -40,11 +41,70 @@ body {
 .nav-item {
   font-size: 1rem;
   font-weight: 500;
-  padding: 0.75rem 1rem;
+  /*padding: 0.75rem 1rem;*/
+  padding: 1rem 1.25rem;
+  margin: -0.25rem;
   color: #666;
   /*text-transform: uppercase;*/
 }
 
+@media (max-width: 768px) {
+  .navbar-nav .nav-item {
+    font-size: 1.125rem;
+    font-weight: 500;
+    padding: 2rem 1.5rem;
+    margin: -1rem;
+  }
+}
+
+.nav-item .emoji {
+  font-size: 1.25rem;
+  margin: -0.125rem;
+}
+
 .nav-item:hover, .nav-item:active {
   color: #f03861;
+}
+
+
+@keyframes bounceIn {
+  from,
+  5%,
+  20%,
+  40%,
+  60%,
+  80%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  0% {
+    opacity: 0.0;
+  }
+
+  5% {
+    opacity: 0.0;
+    transform: scale3d(0.8, 0.8, 0.8);
+  }
+
+  20% {
+    transform: scale3d(1.04, 1.04, 1.04);
+  }
+
+  40% {
+    transform: scale3d(0.98, 0.98, 0.98);
+  }
+
+  60% {
+    transform: scale3d(1.01, 1.01, 1.01);
+  }
+
+  80% {
+    opacity: 1;
+    transform: scale3d(0.995, 0.995, 0.995);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
 }

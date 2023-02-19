@@ -1,7 +1,7 @@
 <nav class="navbar navbar-mobile fixed-top bg-white navbar-expand-lg py-3">
   <div class="container d-flex align-items-center px-md-4 w-100">
     <div class="d-flex align-items-center me-auto">
-      <a class="navbar-brand me-auto" href="{% url 'home' %}">
+      <a class="navbar-brand me-auto bounceIn" href="{% url 'home' %}">
         <span class="navbar-logo">OSI LAB<span class="dot">.</span></span>
       </a>
     </div>
@@ -11,21 +11,28 @@
       <i class="fas fa-bars"></i>
     </button>
     <div class="collapse navbar-collapse flex-grow-0" id="navbarNavDropdown">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav align-items-md-center">
         <a class="nav-item nav-link ms-md-4" href="{% url 'students' %}">people</a>
         <a class="nav-item nav-link ms-md-4" href="{% url 'publications' %}">publications</a>
         <a class="nav-item nav-link ms-md-4" href="{% url 'projects' %}">projects</a>
-{#        <a class="nav-item nav-link ms-md-4" href="{% url 'awards' %}">awards</a>#}
         <a class="nav-item nav-link ms-md-4" href="{% url 'news' %}">news</a>
-        <a class="nav-item nav-link ms-md-4" href="{% url 'photos' %}">photos</a>
+        <a class="nav-item nav-link ms-md-4" href="{% url 'apply' %}">apply</a>
+        <a class="nav-item nav-link ms-md-4" href="{% url 'photos' %}">
+          <span class="d-none d-md-block emoji">📷</span>
+          <span class="d-block d-md-none">photos</span>
+        </a>
         {% if request.user.is_authenticated %}
           <a class="nav-item nav-link ms-md-4" href="{% url 'profile' %}">
-            profile
+            <span class="d-none d-md-block emoji">🧑‍💻</span>
+            <span class="d-block d-md-none">profile</span>
           </a>
         {% else %}
           <a class="nav-item nav-link ms-md-4" href="{% url 'login' %}">
+            <span class="d-none d-md-block emoji">🧑‍💻</span>
+            <span class="d-block d-md-none">
             <i class="far fa-lock"></i>
-            members
+              members
+            </span>
           </a>
         {% endif %}
       </ul>

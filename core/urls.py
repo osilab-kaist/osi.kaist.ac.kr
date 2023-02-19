@@ -10,6 +10,7 @@ urlpatterns = [
     path("projects/", views.ProjectsView.as_view(), name="projects"),
     path("awards/", views.AwardsView.as_view(), name="awards"),
     path("news/", views.NewsView.as_view(), name="news"),
+    path("apply/", views.ApplyView.as_view(), name="apply"),
     path("photos/", views.PhotosView.as_view(), name="photos"),
     path("login/", views.LoginView.as_view(), name="login"),
     path("logout/", LogoutView.as_view(next_page="home"), name="logout"),
