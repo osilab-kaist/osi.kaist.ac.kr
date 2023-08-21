@@ -137,3 +137,23 @@
   .faculty .member-link {
   }
 }
+
+.member.past-visitor {
+  margin-bottom: 1.5rem;
+}
+
+.past-visitor .member-name {
+  font-size: 16px;
+  color: #444;
+  text-transform: uppercase;
+  font-weight: 900;
+  line-height: 1.5;
+}
+
+.past-visitor .member-period {
+  font-size: 15px;
+  font-weight: 500;
+  color: #666;
+  line-height: 1.5;
+}
+

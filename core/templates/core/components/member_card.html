@@ -1,6 +1,7 @@
 {% load alter_email %}
 
 <div class="member col-6 col-lg-4 col-xl-3">
+{#  {% if not member.position_ended or member.position != "VIS" %}#}
   <img class="member-image" src="{{ member.profile_image_url }}" alt="...">
   <div class="member-info">
     <div class="member-name">{{ member.name }}</div>
@@ -14,11 +15,11 @@
         </div>
       {% endif %}
       <div class="member-topics">
-        {% for topic in member.display_research_topics %}
-          <span class="member-topic">
+      {% for topic in member.display_research_topics %}
+        <span class="member-topic">
           {{ topic }}
         </span>
-        {% endfor %}
+      {% endfor %}
       </div>
     </div>
     <div class="member-email text-break">

@@ -17,7 +17,7 @@
           {% include 'core/components/member_card_professor.html' %}
         </div>
         {% if postdocs.exists %}
-          <h1>Postdoc Researchers</h1>
+          <h1 class="mb-4">Postdoc Researchers</h1>
           <div class="row mb-4">
             {% for member in postdocs %}
               {% include 'core/components/member_card.html' %}
@@ -25,31 +25,38 @@
           </div>
         {% endif %}
 
-        <h1>PhD Students</h1>
+        <h1 class="mb-4">PhD Students</h1>
         <div class="row mb-4">
           {% for member in phd_students %}
             {% include 'core/components/member_card.html' %}
           {% endfor %}
         </div>
 
-        <h1>MS Students</h1>
+        <h1 class="mb-4">MS Students</h1>
         <div class="row mb-4">
           {% for member in ms_students %}
             {% include 'core/components/member_card.html' %}
           {% endfor %}
         </div>
 
-        <h1>Visiting</h1>
+        <h1 class="mb-4">Visiting</h1>
         <div class="row mb-4">
           {% for member in visiting_students %}
             {% include 'core/components/member_card.html' %}
           {% endfor %}
         </div>
 
-        <h1>Alumni</h1>
+        <h1 class="mb-4">Alumni</h1>
         <div class="row mb-4">
           {% for member in alumni_students %}
             {% include 'core/components/member_card.html' %}
+          {% endfor %}
+        </div>
+
+        <h1 class="mb-4">Past Visitors</h1>
+        <div class="row mb-4">
+          {% for member in past_visitors %}
+            {% include 'core/components/member_card_past_visitor.html' %}
           {% endfor %}
         </div>
       </div>

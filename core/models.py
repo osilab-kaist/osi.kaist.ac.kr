@@ -90,7 +90,7 @@ class User(AbstractUser):
                                        help_text="Examples: CV, NLP, Theory, Data Centric, FL, RL, GNN, Few-Shot, LLM, AutoML, SSL.")
 
     current_position = models.CharField(max_length=100, blank=True, null=True,
-                                        help_text="Examples: 'Research Scientist, Google', 'Assistant Professor, Seoul National University'")
+                                        help_text="If you are a graduate alumni, enter your current job. Examples: 'Research Scientist, Google', 'Assistant Professor, Seoul National University'")
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
@@ -146,12 +146,12 @@ class User(AbstractUser):
     def display_period(self):
         if self.position == POSITION_VISITING:
             if self.position_end_date and self.position_start_date.year < self.position_end_date.year:
-                return "Visiting·{} - {}".format(
+                return "Visiting · {} - {}".format(
                     self.position_start_date.year,
                     self.position_end_date.year,
                 )
             else:
-                return "Visiting·{}".format(
+                return "Visiting · {}".format(
                     self.position_start_date.year,
                 )
         else:
@@ -198,6 +198,16 @@ class User(AbstractUser):
     def has_phd_permissions(self):
         return self.is_staff or self.position in [POSITION_PHD, POSITION_INTEGRATED, POSITION_POSTDOC,
                                                   POSITION_PROFESSOR]
+
+    @property
+    def position_active(self):
+        started = self.position_start_date and self.position_start_date < datetime.now().date()
+        did_not_end = not self.position_end_date or self.position_end_date >= datetime.now().date()
+        return  started and did_not_end
+
+    @property
+    def position_ended(self):
+        return self.position_end_date and self.position_end_date < datetime.now().date()
 
 
 def generate_invitation_code(n=8, chars=string.ascii_uppercase + string.digits):
