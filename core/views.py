@@ -218,6 +218,7 @@ class SignupView(FormView):
         user.save()
 
         form.invitation_code.uses_remaining -= 1
+        form.invitation_code.save()
         form.save()
 
         email = form.cleaned_data["email"]
