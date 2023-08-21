@@ -170,6 +170,7 @@ SUMMERNOTE_CONFIG = {
             # ['view', ['fullscreen', 'codeview', 'help']],
             ['view', ['codeview', 'help']],
         ],
+        'styleTags': ['p', 'h1', 'h2', 'quote', 'code'],
 
         'popover': {
         },
