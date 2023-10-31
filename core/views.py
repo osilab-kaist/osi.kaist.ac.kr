@@ -94,11 +94,11 @@ class PublicationsView(TemplateView):
 
     def get_context_data(self, **kwargs):
         publications = Publication.objects.filter(type__in=["CON", "WOR", "JRN"], public=True).order_by(
-            '-published_date', 'authors').prefetch_related("tags").all()
+            '-accepted_date', 'authors').prefetch_related("tags").all()
         unpublished_publications = Publication.objects.filter(type__in=["CON", "WOR", "JRN"], public=False).order_by(
-            '-published_date', 'authors').prefetch_related("tags").all()
+            '-accepted_date', 'authors').prefetch_related("tags").all()
         domestic_publications = Publication.objects.filter(type__in=["KCO", "KJR"]).order_by(
-            '-published_date', 'authors').prefetch_related("tags").all()
+            '-accepted_date', 'authors').prefetch_related("tags").all()
         publications = list(publications)
 
         # Add indices

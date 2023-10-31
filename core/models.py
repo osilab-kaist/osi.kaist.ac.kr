@@ -224,7 +224,7 @@ class User(AbstractUser):
     def position_active(self):
         started = self.position_start_date and self.position_start_date < datetime.now().date()
         did_not_end = not self.position_end_date or self.position_end_date >= datetime.now().date()
-        return  started and did_not_end
+        return started and did_not_end
 
     @property
     def position_ended(self):
@@ -286,7 +286,8 @@ class Publication(models.Model):
 
     title = models.TextField()
     published_date = models.DateField(
-        help_text="Date of publication, used for sorting. Enter the conference start date for conferences.")
+        help_text="Date of publication, used for year grouping. Enter the conference start date for conferences.")
+    accepted_date = models.DateField(help_text="Date of acceptance, used for sorting.")
     authors = models.TextField(help_text="E.g., 'Yoshua Bengio, Yann LeCun and Geoffrey Hinton'")
     venue = models.TextField(
         help_text="Use abbreviations for top-tier AI conferences. Add parentheses around the publication year for journal articles. E.g., 'NeurIPS (Oral) 2020', 'NeurIPS Workshop: \"Competition Track on Black-Box Optimization Challenge\" 2020', 'Nature (2020)', 'IEEE Transactions on Wireless Communications (2020)'")
