@@ -1,10 +1,13 @@
 import random
+import re
 import string
 from datetime import datetime
 
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.db.models import CharField, Value as V
+from django.db.models.functions import Concat
 from django.templatetags.static import static
 from django.utils.timezone import now
 
@@ -99,6 +102,24 @@ class User(AbstractUser):
 
     def __str__(self):
         return "{} {}".format(self.first_name, self.last_name)
+
+    @staticmethod
+    def full_name_exists(full_name: str):
+        if full_name in ["Se-Young Yun", "Stephen Cha"]:
+            return True
+
+        # Annotate the query with a concatenated field
+        users = User.objects.annotate(
+            full_name_concat=Concat('first_name', V(' '), 'last_name', output_field=CharField())
+        )
+
+        # Process the concatenated field in a similar way as the search string and compare
+        matched_users = users.filter(
+            full_name_concat__iexact=full_name.lower(),
+        )
+
+        # Check if there's a match
+        return matched_users.exists()
 
     @property
     def is_member(self):
@@ -295,15 +316,20 @@ class Publication(models.Model):
 
     @property
     def display_author_list(self):
+        def trim_non_alpha(s):
+            # Remove non-alphabetic characters from the start and end of the string
+            return re.sub(r'^[^a-zA-Z]+|[^a-zA-Z]+$', '', s)
+
         authors = self.authors.replace(" and ", ",").split(",")
         authors = list(filter(lambda a: a.strip(), authors))
+        # TODO: optimize this
         authors = [
             {
-                "name": author.replace("*", ""),
+                "name": author,
+                "member": User.full_name_exists(trim_non_alpha(author)),
                 "first": author.find("*") != -1,
             } for author in authors
         ]
-        authors[0]["first"] = True
         return authors
 
     def __str__(self):

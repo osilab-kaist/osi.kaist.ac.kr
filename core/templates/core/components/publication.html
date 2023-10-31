@@ -20,7 +20,7 @@
       </div>
       <div class="publication-authors">
         {% for author in publication.display_author_list %}
-          <div class="publication-author {% if author.first %}first{% endif %}">
+          <div class="publication-author {% if author.member %}member{% endif %}">
             <span class="name">{{ author.name }}</span>{% if not forloop.last %}<span class="comma">,</span>{% endif %}
           </div>
         {% endfor %}
