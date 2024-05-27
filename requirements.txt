@@ -3,3 +3,6 @@ pandas
 pillow
 django-bootstrap-v5
 django-summernote
+jupyter
+ipython
+django-extensions
