@@ -6,3 +6,4 @@ django-summernote
 jupyter
 ipython
 django-extensions
+django-environ

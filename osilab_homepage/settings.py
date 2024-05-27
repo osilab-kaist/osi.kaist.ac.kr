@@ -11,9 +11,23 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import sys
+
+import environ
+
+print("Loading settings.py...", file=sys.stderr)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Read environment variables from .env file (optional)
+env = environ.Env(
+    DEBUG=(bool, None),
+    STATIC_ROOT=(str, None),
+    MEDIA_ROOT=(str, None),
+    SECRET_KEY=(str, None),
+)
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Project paths
 PROJECT_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -22,10 +36,20 @@ PROJECT_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '7u3e$ei+h9*w@m&k2nkd9i0$m^pzf!mitcu=_9qn%a602wfk)w'
+if env("SECRET_KEY") is not None:
+    SECRET_KEY = env("SECRET_KEY")
+    print("Using custom SECRET_KEY", file=sys.stderr)
+else:
+    SECRET_KEY = '7u3e$ei+h9*w@m&k2nkd9i0$m^pzf!mitcu=_9qn%a602wfk)w'
+    print(f"Using default SECRET_KEY: {SECRET_KEY}", file=sys.stderr)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if env("DEBUG") is not None:
+    DEBUG = env("DEBUG")
+    print(f"Using custom DEBUG: {DEBUG}", file=sys.stderr)
+else:
+    DEBUG = True
+    print(f"Using default DEBUG: {DEBUG}", file=sys.stderr)
 
 ALLOWED_HOSTS = ["osi.kaist.ac.kr", "localhost", "127.0.0.1", "143.248.92.48", "*"]
 
@@ -42,6 +66,11 @@ INSTALLED_APPS = [
     'bootstrap5',
     'django_summernote',
     'core',
+    'django_extensions',
+]
+
+NOTEBOOK_ARGUMENTS = [
+    '--ip', '0.0.0.0',
 ]
 
 MIDDLEWARE = [
@@ -143,9 +172,17 @@ STATICFILES_DIRS = (
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 
-STATIC_URL = '/static3/'
+STATIC_URL = '/static/'
+if env("STATIC_ROOT") is not None:
+    STATIC_ROOT = env("STATIC_ROOT")
+    print(f"Using custom STATIC_ROOT: {STATIC_ROOT}", file=sys.stderr)
 
-MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
+if env("MEDIA_ROOT") is not None:
+    MEDIA_ROOT = env("MEDIA_ROOT")
+    print(f"Using custom MEDIA_ROOT: {MEDIA_ROOT}", file=sys.stderr)
+else:
+    MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
+    print(f"Using default MEDIA_ROOT: {MEDIA_ROOT}", file=sys.stderr)
 MEDIA_URL = '/media/'
 
 SUMMERNOTE_THEME = 'bs4'
@@ -181,3 +218,5 @@ SUMMERNOTE_CONFIG = {
 
     # 'disable_attachment': True
 }
+
+print("Done loading settings.py", file=sys.stderr)
