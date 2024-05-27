@@ -27,6 +27,7 @@ pip install -r requirements.txt  # consider making a virtual environment before 
 - Copy `db.sqlite3` from our production server to your local project root directory. Note that`osi.kaist.ac.kr` is your local project root directory.
 - Copy the `media` directory from the server **to your local project root directory**. Note, the production media files are in `/var/www/osi.kaist.ac.kr/media`.
   - Media files are the files uploaded by users, such as profile images, event images, etc. These are not kept in the Git repository.
+  - Note that static images (such as the OSI logo) are kept in the Git repository and are not in the `media` directory. Consider the `media` directory as an extension of the database, but for files.
 
 3. Run server
 
@@ -50,7 +51,6 @@ Note that templates can be extended (we extend all pages from `base.html`) and i
 2. SSH into the server
 3. Pull the changes from GitHub
 4. Restart the server
-
-```bash
-sudo apachectl restart
-```
+    ```bash
+    source deploy.sh  # run this from the production server!
+    ```
