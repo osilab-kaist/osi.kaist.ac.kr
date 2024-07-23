@@ -45,6 +45,8 @@ Note that templates can be extended (we extend all pages from `base.html`) and i
 
 - **For dynamic content**, you will need to change the corresponding views in `views.py` and the corresponding models in `models.py`. You should have a good understanding of Django to do this. If you are relying on this guide, you probably need to learn more about Django.
 
+## Deployment Guide
+
 ### How to push changes to the production server
 
 1. Push your changes to GitHub
@@ -54,3 +56,15 @@ Note that templates can be extended (we extend all pages from `base.html`) and i
     ```bash
     source deploy.sh  # run this from the production server!
     ```
+
+### Apache setttings
+
+You only need to do this when setting up a new server.
+
+- According to KAIST security practices, you need to block directory indexing (e.g., viewing list of files in `/media/`). To do this, disable the `Indexes` option in your Apache config at `/etc/apache2/apache2.conf`.
+  ```
+  <Directory /var/www/>
+	  Options -Indexes +FollowSymLinks
+	  AllowOverride None
+	  Require all granted
+  </Directory>
