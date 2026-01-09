@@ -11,6 +11,8 @@ from django.db.models.functions import Concat
 from django.templatetags.static import static
 from django.utils.timezone import now
 
+from core.clean_html import clean_news_post_html
+
 
 class CustomUserManager(BaseUserManager):
     """
@@ -429,6 +431,15 @@ class Post(models.Model):
     published_date = models.DateField(default=now)
     title = models.TextField()
     body = models.TextField(help_text="This will be displayed on the website as raw HTML.", null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        """
+        Override save to automatically clean body HTML before saving.
+        Removes inline styles and fixes links for security.
+        """
+        if self.body:
+            self.body = clean_news_post_html(self.body)
+        super().save(*args, **kwargs)
 
 
 class AdminToken(models.Model):
