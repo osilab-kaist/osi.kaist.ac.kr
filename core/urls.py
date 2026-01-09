@@ -12,9 +12,9 @@ urlpatterns = [
     path("news/", views.NewsView.as_view(), name="news"),
     path("apply/", views.ApplyView.as_view(), name="apply"),
     path("photos/", views.PhotosView.as_view(), name="photos"),
-    path("login/", views.LoginView.as_view(), name="login"),
-    path("logout/", LogoutView.as_view(next_page="home"), name="logout"),
-    path("signup/", views.SignupView.as_view(), name="signup"),
+    path("osi-login/", views.LoginView.as_view(), name="login"),
+    path("osi-logout/", LogoutView.as_view(next_page="home"), name="logout"),
+    path("osi-signup/", views.SignupView.as_view(), name="signup"),
     path("profile/", views.ProfileView.as_view(), name="profile"),
 
     path("project/create/", views.ProjectCreateView.as_view(), name="project_create"),
@@ -34,7 +34,7 @@ urlpatterns = [
 
     path("api/gpu-status/create/", views.GPUStatusCreateAPIView.as_view(), name="gpu_status_create_api"),
 
-    path("reset-password", views.ResetPasswordView.as_view(), name="reset_password"),
+    path("osi-reset-password", views.ResetPasswordView.as_view(), name="reset_password"),
 
     path("", views.HomeView.as_view(), name="home"),
 ]

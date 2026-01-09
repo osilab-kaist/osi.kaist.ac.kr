@@ -174,7 +174,7 @@ STATICFILES_DIRS = (
     os.path.join(PROJECT_DIR, 'static'),
 )
 
-LOGIN_URL = '/login/'
+LOGIN_URL = '/osi-login/'
 LOGIN_REDIRECT_URL = '/'
 
 STATIC_URL = '/static/'
