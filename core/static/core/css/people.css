@@ -20,14 +20,12 @@
   color: #444;
   text-transform: uppercase;
   font-weight: 900;
-  line-height: 1.5;
 }
 
 .member-period {
-  font-size: 13px;
-  font-weight: 500;
-  color: #666;
-  line-height: 1.5;
+  font-size: 15px;
+  font-weight: 700;
+  color: #777;
 }
 
 .member-topics {
@@ -71,9 +69,6 @@
   line-height: 2;
 }
 
-.member-link {
-}
-
 
 .faculty .member-image {
   margin: 0 0 1rem 0;
@@ -94,9 +89,6 @@
 }
 
 @media (min-width: 768px) {
-  .faculty .member-info {
-  }
-
   .faculty .member-image {
     width: 100%;
     max-width: 14.5rem;
@@ -105,13 +97,13 @@
   }
 
   .faculty .member-name {
-    font-size: 1.25rem;
+    font-size: 1.375rem;
     color: #444;
     line-height: 1.5;
   }
 
   .faculty .member-period {
-    font-size: 1rem;
+    font-size: 1.25rem;
     margin-bottom: 0.5rem;
   }
 
@@ -136,7 +128,29 @@
 
   .faculty .member-link {
   }
+
+  .member-name {
+    font-size: 1rem;
+  }
+
+  .member-period {
+    font-size: 1rem;
+  }
+
+  .member-email {
+    font-size: 0.875rem;
+  }
+
+  .member-links {
+    font-size: 0.875rem;
+  }
+ 
+  .member-topic {
+      font-size: 0.8125rem;
+  }
 }
+
+
 
 .member.past-visitor {
   margin-bottom: 1.5rem;

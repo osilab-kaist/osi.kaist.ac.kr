@@ -169,20 +169,20 @@ class User(AbstractUser):
     def display_period(self):
         if self.position == POSITION_VISITING:
             if self.position_end_date and self.position_start_date.year < self.position_end_date.year:
-                return "Visiting · {} - {}".format(
+                return "Intern ({}–{})".format(
                     self.position_start_date.year,
                     self.position_end_date.year,
                 )
             else:
-                return "Visiting · {}".format(
+                return "Intern ({})".format(
                     self.position_start_date.year,
                 )
         else:
             if self.entry_semester:
                 if self.graduation_semester:
-                    return "{}·{}".format(self.course_shorthand, self.graduation_semester)
+                    return "{} (–{})".format(self.course_shorthand, self.graduation_semester)
                 else:
-                    return "{}·{}".format(self.course_shorthand, self.entry_semester)
+                    return "{} ({}–)".format(self.course_shorthand, self.entry_semester)
 
     @property
     def display_research_topics(self):

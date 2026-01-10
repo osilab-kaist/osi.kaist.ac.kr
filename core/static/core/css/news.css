@@ -3,8 +3,8 @@
 }
 
 .post .post-header {
-  font-size: 0.9375rem;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 700;
   margin-bottom: 0.5rem;
   color: #444;
 }
@@ -14,9 +14,8 @@
 }
 
 .post .post-body {
-  font-size: 0.875rem;
   margin-bottom: 0;
-  color: #666;
+  color: #444;
 }
 
 .post .post-body p {
@@ -32,12 +31,16 @@
 }
 
 @media (min-width: 768px) {
+  .post {
+    margin-bottom: 2.5rem;
+  }
+
   .post .post-header {
-    font-size: 1rem;
+    font-size: 1.125rem;
     margin-bottom: 0.5rem;
   }
 
   .post .post-body {
-    font-size: 0.9375rem;
+    font-size: 1rem;
   }
 }

@@ -1,47 +1,44 @@
+.intro .intro-hero {
+  margin-bottom: 1rem;
+}
+
 .intro .intro-welcome {
   font-size: 1.5rem;
   font-weight: 700;
   color: #222;
-  margin-bottom: 1.5rem;
-}
-
-.intro .intro-header {
-  font-size: 1.125rem;
-  font-weight: 500;
-  color: #666;
+  margin-bottom: 1rem;
 }
 
 .intro .intro-paragraph {
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-weight: 400;
-  margin-bottom: 1.5rem;
-  color: #666;
-  text-shadow: 0 0 4px transparent;
+  margin-bottom: 1rem;
+  color: #444;
 }
 
 @media (min-width: 768px) {
-  .intro .intro-welcome {
-    font-size: 2.25rem;
-    margin-bottom: 3rem;
+  .intro .intro-hero {
+    margin-top: 3rem;
+    margin-bottom: 2rem;
   }
 
-  .intro .intro-header {
-    font-size: 1.375rem;
+  .intro .intro-welcome {
+    font-size: 2.25rem;
+    margin-bottom: 1.5rem;
   }
 
   .intro .intro-paragraph {
-    font-size: 1.125rem;
-    margin-bottom: 3rem;
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
   }
 }
 
 .intro-photo {
+  border-radius: 1rem;
 }
 
 .intro .latest-news {
-  margin-top: 6rem;
-  border-top: 1px #ccc solid;
-  padding-top: 3rem;
+  margin-top: 2rem;
 }
 
 .intro .latest-news .header-wrapper {
@@ -50,7 +47,7 @@
 }
 
 .intro .latest-news .header {
-  font-size: 1.375rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: #444;
   margin-bottom: 0;
@@ -58,12 +55,26 @@
 
 .intro .latest-news .see-more {
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 700;
   margin-bottom: 0;
-  color: #666;
+  color: #888;
 }
 
 .intro .latest-news .see-more:active,
 .intro .latest-news .see-more:hover {
   color: #222;
+}
+
+
+@media (min-width: 768px) {
+  .intro .latest-news {
+    margin-top: 3rem;
+  }
+.intro .latest-news .header {
+    font-size: 1.5rem;
+  }
+
+  .intro .latest-news .see-more {
+    font-size: 1.25rem;
+  }
 }

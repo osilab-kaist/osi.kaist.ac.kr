@@ -4,7 +4,6 @@
 
 {% block head %}
   <link rel="stylesheet" href="{% static 'core/css/publications.css' %}">
-  <link rel="stylesheet" href="{% static 'core/css/awards.css' %}">
   <link rel="stylesheet" href="{% static 'core/css/news.css' %}">
 {% endblock %}
 
@@ -25,7 +24,7 @@
             <a class="post-header d-block"
                {% if request.user.has_phd_permissions %}href="{% url 'post_update' post.id %}" {% endif %}>
               <div class="post-date d-inline">
-                [{{ post.published_date|date:"M d, Y" }}]
+                [{{ post.published_date|date:"Y-m" }}]
               </div>
               <div class="post-title d-inline">
                 {{ post.title }}

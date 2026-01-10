@@ -5,23 +5,17 @@
   <div class="d-flex">
     {% if publication.index %}
       <div class="publication-index">
-        [{{ publication.index }}]
+        {{ publication.index }}
       </div>
     {% endif %}
     <div>
       <div class="publication-title">
-        {% if request.user.has_member_permissions %}
-          <a href="{% url 'publication_update' publication.id %}">
-        {% endif %}
         {{ publication.title }}
-        {% if request.user.has_member_permissions %}
-          </a>
-        {% endif %}
       </div>
       <div class="publication-authors">
         {% for author in publication.display_author_list %}
           <div class="publication-author {% if author.member %}member{% endif %}">
-            <span class="name">{{ author.name }}</span>{% if not forloop.last %}<span class="comma">,</span>{% endif %}
+            <span class="name">{{ author.name }}</span>{% if not forloop.last %}<span>,</span>{% endif %}
           </div>
         {% endfor %}
       </div>
@@ -38,6 +32,9 @@
       {% endif %}
       {% if publication.code_link %}
         [<a href="{{ publication.code_link }}">code</a>]
+      {% endif %}
+      {% if request.user.has_member_permissions %}
+        [<a href="{% url 'publication_update' publication.id %}">edit</a>]
       {% endif %}
     </span>
       </div>

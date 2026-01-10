@@ -10,24 +10,22 @@
 {% block body %}
   <div class="container intro content">
     <div class="row justify-content-center">
-      <div class="col-12 col-md-10 col-lg-8">
+      <div class="col-12 col-md-10 col-lg-8 intro-hero">
         <div class="intro-welcome">
-          Welcome
+          Welcome to OSI LAB.
         </div>
-        {#        <div class="intro-header">Optimization and Statistical Inference Lab</div>#}
-        <div class="intro-header">Optimization and Statistical Inference Lab</div>
         <p class="intro-paragraph">
-          Welcome to the Optimization and Statistical Inference Lab at KAIST AI.
-          We tackle a wide range of problems, from theoretical analysis of traditional machine learning, to
-          the latest research topics in deep learning.
-          Please refer to <a href="{% url 'publications' %}">publications</a> for details.
+          We are the Optimization and Statistical Inference Lab of KAIST AI.
+          We tackle a wide range of problems from RL theory to generative AI.
+          Explore our <a href="{% url 'publications' %}">publications</a> to learn more about our research.
         </p>
         <p class="intro-paragraph">
-          If you are interested in joining us, please refer <a href="https://www.notion.so/osilab/Apply-to-OSI-Lab-a9c84dfb5820437d8dd13d585fb2eda6?pvs=4">here</a>.
+          If you are interested in joining us, please refer to
+          <a href="https://www.notion.so/osilab/Apply-to-OSI-Lab-a9c84dfb5820437d8dd13d585fb2eda6?pvs=4">this page</a>.
         </p>
       </div>
-      <div class="col-12 col-md-6 text-center">
-        <img class="intro-photo w-100 mb-5" src="{% static 'core/images/photo.jpg' %}" alt="Group Photo Spring 2024">
+      <div class="col-12 col-md-9 text-center">
+        <img class="intro-photo w-100 mb-4" src="{% static 'core/images/photo.jpg' %}" alt="Group Photo">
       </div>
       <div class="col-12 col-md-10 col-xl-8 latest-news">
         <div class="d-flex align-items-end header-wrapper">
@@ -50,7 +48,6 @@
                 {{ post.body|safe }}
               </div>
             {% endif %}
-
           </div>
         {% endfor %}
       </div>

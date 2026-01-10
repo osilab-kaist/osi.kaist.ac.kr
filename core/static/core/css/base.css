@@ -7,17 +7,17 @@ body {
 }
 
 .content {
-  margin-top: 3rem;
-  margin-bottom: 3rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .main-header {
   display: flex;
   align-items: center;
   text-transform: none;
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: 700;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   color: #222;
 }
 
@@ -34,7 +34,7 @@ body {
 @media (min-width: 768px) {
   .main-header {
     font-size: 2.25rem;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
   }
 
   .main-header-button {

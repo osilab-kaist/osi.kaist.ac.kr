@@ -19,7 +19,7 @@
 
 .publication {
   line-height: 1.5;
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
 }
 
 .publication .publication-tag {
@@ -30,7 +30,7 @@
 }
 
 .publication .publication-index {
-  min-width: 3rem;
+  min-width: 3.75rem;
 }
 
 .publication .publication-index,
@@ -49,13 +49,12 @@
   align-items: center;
   flex-wrap: wrap;
   font-size: 0.875rem;
-  font-weight: 400;
+  font-weight: 500;
   color: #666;
-  margin-bottom: 0.5rem;
 }
 
 .publication .publication-author {
-  margin-right: 0.5rem;
+  margin-right: 0.25rem;
 }
 
 .publication .publication-author.member .name {
@@ -63,20 +62,26 @@
 }
 
 .publication .publication-author .comma {
-  font-size: 0.75rem;
+  /* font-size: 0.75rem; */
   /*margin-left: 0.125rem;*/
 }
 
 .publication .publication-venue {
   font-size: 0.875rem;
-  font-weight: 700;
-  color: #555;
+  font-weight: 500;
+  /* font-style: italic; */
+  color: #444;
 }
 
 @media (min-width: 768px) {
+  .section-header {
+    font-size: 2rem;
+  }
+
   .publication .publication-index,
   .publication .publication-title {
-    font-size: 0.9375rem;
+    font-size: 1.125rem;
+    margin-bottom: 0.25rem;
   }
 
   .publication .publication-authors {

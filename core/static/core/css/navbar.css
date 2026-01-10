@@ -25,7 +25,6 @@ body {
   color: black;
   font-size: 1.75rem;
   font-weight: 900;
-  margin: 0;
 }
 
 .navbar-logo .dot {
@@ -54,6 +53,10 @@ body {
     font-weight: 500;
     padding: 2rem 1.5rem;
     margin: -1rem;
+  }
+
+  .navbar-nav .nav-item:first-child {
+    margin-top: 0.5rem;
   }
 }
 
