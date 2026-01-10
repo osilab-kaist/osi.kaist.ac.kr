@@ -16,9 +16,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, FormView, CreateView, UpdateView, ListView, DeleteView
 
 from core.forms import PublicationForm, AdminPublicationForm, AdminProjectForm, ProjectForm, AdminPhotoForm, SignupForm, \
-    ProfileForm, PhotoFormWithoutImage, PhotoForm, AdminAwardForm, AwardForm, GPUStatusForm, PostForm, PasswordResetForm
+    ProfileForm, PhotoFormWithoutImage, PhotoForm,  GPUStatusForm, PostForm, PasswordResetForm
 from core.mixins import JsonableResponseMixin, MemberRequiredMixin, PhdRequiredMixin, StaffRequiredMixin
-from core.models import Publication, Project, Photo, User, Award, PublicationTag, GPUStatus, Post
+from core.models import Publication, Project, Photo, User, PublicationTag, GPUStatus, Post
 
 
 class HomeView(TemplateView):
@@ -159,16 +159,6 @@ class ProjectsView(TemplateView):
         return context
 
 
-class AwardsView(TemplateView):
-    template_name = "core/awards.html"
-
-    def get_context_data(self, **kwargs):
-        context = dict()
-        context["awards"] = Award.objects.filter(public=True).order_by('-awarded_date', 'awardees').all()
-        context["unpublished_awards"] = Award.objects.filter(public=False).order_by('-awarded_date', 'awardees').all()
-        return context
-
-
 class ApplyView(TemplateView):
     template_name = "core/apply.html"
 
@@ -205,7 +195,6 @@ class NewsView(ListView):
 class LoginView(django.contrib.auth.views.LoginView):
     redirect_authenticated_user = True
     template_name = "core/login.html"
-
 
 class SignupView(FormView):
     template_name = "core/signup.html"
@@ -336,48 +325,6 @@ class ProjectDeleteView(StaffRequiredMixin, DeleteView):
     model = Project
     slug_field = "id"
     success_url = reverse_lazy("projects")
-
-
-class AwardCreateView(MemberRequiredMixin, CreateView):
-    template_name = "core/award_create.html"
-    model = Award
-    success_url = reverse_lazy("awards")
-
-    object: Award
-
-    def get_form_class(self):
-        if self.request.user.is_staff:
-            return AdminAwardForm
-        else:
-            return AwardForm
-
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.created_by = self.request.user
-        self.object.last_modified_by = self.request.user
-        self.object.save()
-        return HttpResponseRedirect(self.get_success_url())
-
-
-class AwardUpdateView(MemberRequiredMixin, UpdateView):
-    template_name = "core/award_update.html"
-    model = Award
-    slug_field = "id"
-    success_url = reverse_lazy("awards")
-
-    object: Award
-
-    def get_form_class(self):
-        if self.request.user.is_staff:
-            return AdminAwardForm
-        else:
-            return AwardForm
-
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.last_modified_by = self.request.user
-        self.object.save()
-        return HttpResponseRedirect(self.get_success_url())
 
 
 class PostCreateView(PhdRequiredMixin, CreateView):

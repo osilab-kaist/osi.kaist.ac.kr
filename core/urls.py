@@ -4,11 +4,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("professor/", views.ProfessorView.as_view(), name="professor"),
     path("students/", views.StudentsView.as_view(), name="students"),
     path("publications/", views.PublicationsView.as_view(), name="publications"),
     path("projects/", views.ProjectsView.as_view(), name="projects"),
-    path("awards/", views.AwardsView.as_view(), name="awards"),
     path("news/", views.NewsView.as_view(), name="news"),
     path("apply/", views.ApplyView.as_view(), name="apply"),
     path("photos/", views.PhotosView.as_view(), name="photos"),
@@ -23,8 +21,6 @@ urlpatterns = [
     path("publication/create/", views.PublicationCreateView.as_view(), name="publication_create"),
     path("publication/<slug:slug>/update/", views.PublicationUpdateView.as_view(), name="publication_update"),
     path("publication/<slug:slug>/delete/", views.PublicationDeleteView.as_view(), name="publication_delete"),
-    path("award/create/", views.AwardCreateView.as_view(), name="award_create"),
-    path("award/<slug:slug>/update/", views.AwardUpdateView.as_view(), name="award_update"),
     path("post/create/", views.PostCreateView.as_view(), name="post_create"),
     path("post/<slug:slug>/update/", views.PostUpdateView.as_view(), name="post_update"),
     path("post/<slug:slug>/delete/", views.PostDeleteView.as_view(), name="post_delete"),
