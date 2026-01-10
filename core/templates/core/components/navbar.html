@@ -1,8 +1,10 @@
+{% load staticfiles %}
+
 <nav class="navbar navbar-mobile fixed-top bg-white navbar-expand-lg py-3">
   <div class="container d-flex align-items-center px-md-4 w-100">
     <div class="d-flex align-items-center me-auto">
       <a class="navbar-brand me-auto bounceIn" href="{% url 'home' %}">
-        <span class="navbar-logo">OSI LAB<span class="dot">.</span></span>
+        <img src="{% static 'core/images/logo_osi_simple.png' %}" alt="OSI LAB" class="navbar-logo-osi">
       </a>
     </div>
     <button class="d-block d-lg-none ms-auto navbar-toggler" type="button" data-bs-toggle="collapse"
