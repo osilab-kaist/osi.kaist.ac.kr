@@ -179,6 +179,8 @@ class PhotosView(TemplateView):
     def get_context_data(self, **kwargs):
         context = dict()
         photos = Photo.objects.order_by("-public", "taken_date").all()
+        if not self.request.user.is_authenticated:
+            photos = photos.filter(public=True)
         photos_by_year = defaultdict(list)
         for p in photos:
             photos_by_year[p.taken_date.year].append(p)
