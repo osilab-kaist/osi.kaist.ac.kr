@@ -6,7 +6,7 @@ from . import views
 urlpatterns = [
     path("students/", views.StudentsView.as_view(), name="students"),
     path("publications/", views.PublicationsView.as_view(), name="publications"),
-    path("projects/", views.ProjectsView.as_view(), name="projects"),
+    # path("projects/", views.ProjectsView.as_view(), name="projects"),
     path("news/", views.NewsView.as_view(), name="news"),
     path("apply/", views.ApplyView.as_view(), name="apply"),
     path("photos/", views.PhotosView.as_view(), name="photos"),
@@ -15,9 +15,9 @@ urlpatterns = [
     path("osi-signup/", views.SignupView.as_view(), name="signup"),
     path("profile/", views.ProfileView.as_view(), name="profile"),
 
-    path("project/create/", views.ProjectCreateView.as_view(), name="project_create"),
-    path("project/<slug:slug>/update/", views.ProjectUpdateView.as_view(), name="project_update"),
-    path("project/<slug:slug>/delete/", views.ProjectDeleteView.as_view(), name="project_delete"),
+    # path("project/create/", views.ProjectCreateView.as_view(), name="project_create"),
+    # path("project/<slug:slug>/update/", views.ProjectUpdateView.as_view(), name="project_update"),
+    # path("project/<slug:slug>/delete/", views.ProjectDeleteView.as_view(), name="project_delete"),
     path("publication/create/", views.PublicationCreateView.as_view(), name="publication_create"),
     path("publication/<slug:slug>/update/", views.PublicationUpdateView.as_view(), name="publication_update"),
     path("publication/<slug:slug>/delete/", views.PublicationDeleteView.as_view(), name="publication_delete"),
