@@ -38,12 +38,12 @@ body {
 }
 
 .nav-item {
-  font-size: 1rem;
+  font-size: 1.125rem;
   font-weight: 500;
   /*padding: 0.75rem 1rem;*/
   padding: 1rem 1.25rem;
   margin: -0.25rem;
-  color: #666;
+  color: #444;
   /*text-transform: uppercase;*/
 }
 
@@ -58,11 +58,6 @@ body {
   .navbar-nav .nav-item:first-child {
     margin-top: 0.5rem;
   }
-}
-
-.nav-item .emoji {
-  font-size: 1.25rem;
-  margin: -0.125rem;
 }
 
 .nav-item:hover, .nav-item:active {
