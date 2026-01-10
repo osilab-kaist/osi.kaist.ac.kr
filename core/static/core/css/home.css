@@ -50,14 +50,13 @@
   font-size: 1.25rem;
   font-weight: 700;
   color: #444;
-  margin-bottom: 0;
+  margin-bottom: 0.5rem;
 }
 
 .intro .latest-news .see-more {
   font-size: 1rem;
-  font-weight: 700;
-  margin-bottom: 0;
-  color: #888;
+  font-weight: 500;
+  color: #f03861;
 }
 
 .intro .latest-news .see-more:active,

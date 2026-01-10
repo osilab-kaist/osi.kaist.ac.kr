@@ -25,14 +25,11 @@
         <img class="intro-photo w-100 mb-4" src="{% static 'core/images/photo.jpg' %}" alt="Group Photo">
       </div>
       <div class="col-12 col-md-10 col-xl-8 latest-news">
-        <div class="d-flex align-items-end header-wrapper">
           <div class="header">Latest News</div>
-          <a href="{% url 'news' %}" class="see-more ms-auto">See More</a>
-        </div>
         {% for post in latest_posts %}
           <div class="post">
-            <a class="post-header d-block"
-               {% if request.user.has_phd_permissions %}href="{% url 'post_update' post.id %}" {% endif %}>
+        <a class="post-header d-block" {% if request.user.has_phd_permissions %}href="{% url 'post_update' post.id %}"
+          {% endif %}>
               <div class="post-date d-inline">
                 [{{ post.published_date|date:"M d, Y" }}]
               </div>
@@ -47,8 +44,10 @@
             {% endif %}
           </div>
         {% endfor %}
+      <div class="d-flex flex-row justify-content-center">
+        <a href="{% url 'news' %}" class="see-more">See more</a>
       </div>
     </div>
   </div>
-
+</div>
 {% endblock %}
