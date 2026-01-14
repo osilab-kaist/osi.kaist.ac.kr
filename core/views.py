@@ -82,7 +82,7 @@ class StudentsView(TemplateView):
             profile_image='').order_by('position_start_date', 'first_name').all()
         context["alumni_students"] = User.objects.filter(position__in=["POS", "PHD", "INT", "MAS"],
                                                          position_end_date__lt=timezone.now()).order_by(
-            'position_end_date', 'first_name').all()
+            '-position_end_date', 'position_start_date', 'first_name').all()
         context["past_visitors"] = User.objects.filter(position="VIS").filter(
             position_end_date__lt=now).exclude(
             profile_image='').order_by('position_start_date', 'first_name').all()
